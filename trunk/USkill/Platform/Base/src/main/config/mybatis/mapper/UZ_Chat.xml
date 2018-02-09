@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="UZ_Chat">
+	
+	<!--<cache eviction="LRU" flushInterval="18000000" size="1000" readOnly="true"/>-->
+
+    <!-- ***************************Selection************************** -->
+    <!-- Retrieve Information                                           -->
+    <!-- ************************************************************** -->
+        
+    <sql id="chatMessageColumns">
+    	cm.id, cm.sendUserId, cm.receiveUserId, cm.sendTime, cm.content, cm.read
+    </sql>
+    
+    <select id="getChatUserList" parameterType="Map" resultType="Map">
+		SELECT cu.id, u.username, u.idImage
+		  FROM uz_chat_user cu, uz_user u
+		 WHERE (cu.sendUserId = #{userId} AND cu.receiveUserId = u.userId AND (cm.deleteB = 0 OR cm.deleteB = 2))
+		    OR (cu.receiveUserId = #{userId} AND cu.sendUserId = u.userId AND (cm.deleteB = 0 OR cm.deleteB = 1))
+		 ORDER BY cu.id DESC
+    	 LIMIT #{begin},#{end}
+    </select>
+    <select id="getChatUserListAmount" parameterType="Map" resultType="int">
+		SELECT COUNT(cu.id)
+    	  FROM uz_chat_user cu, uz_user u
+		 WHERE (cu.sendUserId = #{userId} AND cu.receiveUserId = u.userId AND (cm.deleteB = 0 OR cm.deleteB = 2))
+		    OR (cu.receiveUserId = #{userId} AND cu.sendUserId = u.userId AND (cm.deleteB = 0 OR cm.deleteB = 1))
+    </select>
+        
+    <select id="getChatMessageList" parameterType="Map" resultType="ChatMessage">
+		SELECT <include refid="chatMessageColumns" />
+    	  FROM uz_chat_message cm
+    	 WHERE (cm.sendUserId = #{userId} and cm.receiveUserId = #{friendUserId}
+    	  	OR (cm.sendUserId = #{friendUserId} and cm.receiveUserId = #{userId}
+    	 ORDER BY cm.id DESC
+    	 LIMIT #{begin},#{end}
+    </select>
+    <select id="getChatMessageListAmount" parameterType="int" resultType="int">
+		SELECT COUNT(cm.id)
+    	  FROM uz_chat_message cm
+    	 WHERE (cm.sendUserId = #{userId} and cm.receiveUserId = #{friendUserId}
+    	  	OR (cm.sendUserId = #{friendUserId} and cm.receiveUserId = #{userId}
+    </select>
+    
+    <!-- ***************************Insertion************************** -->
+    <!-- Insert Information                                             -->
+    <!-- ************************************************************** -->	
+	<insert id="insertChatMessage" parameterType="ChatMessage" useGeneratedKeys="true" keyProperty="id">
+		INSERT uz_chat_message(sendUserId, receiveUserId, sentTime, content, read)
+	    VALUES (#{sendUserId}, #{receiveUserId}, #{sentTime}, #{content}, #{read})
+	</insert>
+	
+	<insert id="insertChatUser" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+		INSERT uz_chat_user(sendUserId, receiveUserId, createdTime, deleteB)
+	    VALUES (#{sendUserId}, #{receiveUserId}, #{createdTime}, 0)
+	</insert>
+	
+    <!-- ****************************Update**************************** -->
+    <!-- Update Information                                             -->
+    <!-- ************************************************************** -->	
+	
+	<!-- 逻辑删除，send user删除和某个用户的聊天记录时，更新deleteB为1；receive user删除和某个用户聊天记录时，更新deleteB为2。如果deleteB已经大于0，则直接删除 -->
+	<update id="updateChatUserDeleteFlag" parameterType="Map">
+		UPDATE uz_chat_user
+		   SET deleteB = #{deleteB}
+		 WHERE sendUserId = ${sendUserId}
+		   AND receiveUserId = #{receiveUserId}
+	</update>
+		
+    <!-- ****************************Delete**************************** -->
+    <!-- Delete Information                                             -->
+    <!-- ************************************************************** -->
+ 	<delete id="deleteChatUser" parameterType="int">
+ 		DELETE FROM uz_chat_user 
+ 		 WHERE sendUserId = ${sendUserId}
+		   AND receiveUserId = #{receiveUserId}
+ 	</delete>
+ 
+</mapper>

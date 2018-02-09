@@ -1,0 +1,261 @@
+@charset "utf-8";
+/* CSS Document */
+
+#log_bg
+{
+	background-color: #eeeeee;
+    height: 700px;
+}
+.login
+{
+	width:1200px;
+	margin:0 auto;
+}
+.login .left
+{
+	background:url(../img/user/mid_bg.png) no-repeat;
+	width:516px;
+	height:401px;
+	float:left;
+	margin-top:120px;
+	padding-right:160px;
+}
+.login .right
+{
+	width:450px;
+	min-height:455px;
+	background-color:#ffffff;
+	margin-top:105px;
+	float:left;
+	border:1px solid #eeeeee;
+	border-radius:6px;
+}
+.login .top
+{
+	padding-bottom:20px;
+	width:440px;
+	margin:0 auto;
+}
+.login .top p
+{
+	color:#7b7b7b;
+	font-size:24px;
+	font-family:"微软雅黑";
+	line-height:60px;
+	text-align:center;
+	border-bottom:1px solid #dbdbdb;
+}
+.login .info
+{
+	width:440px;
+	margin:0 auto;
+	padding-bottom:22px;
+}
+.login .info .login-error{
+	color: #ff4200;
+	height: 30px;
+	line-height: 30px;
+	width:298px;
+	margin:4px auto;
+}
+.login .info .phone
+{
+	width:298px;
+	margin:0 auto;
+}
+.login .info .phone .value
+{
+	width:298px;
+	height:50px;
+	line-height:50px;
+	margin:0 auto;
+	background-color:#f4fbff;
+	border:1px solid #e5e5e5;
+	border-radius:3px;
+}
+.login .info .phone span
+{
+	display:block;
+	background:url(../img/user/user-sj.png) no-repeat;
+	width:50px;
+	height:50px;
+	float:left;
+	background-position:50%;
+}
+.login .info input
+{	
+	line-height:48px;
+    background-color:#f4fbff;
+    border:0;
+    width:243px;
+    height: 48px;
+}
+.login .info .pwd
+{
+	width:298px;
+	margin:0 auto;
+	margin-top:18px;
+}
+.login .info .pwd .value
+{
+	width:298px;
+	height:50px;
+	line-height:50px;
+	margin:0 auto;
+	background-color:#f4fbff;
+	border:1px solid #e5e5e5;
+	border-radius:3px;
+}
+.login .info .pwd span
+{
+	display:block;
+	background:url(../img/user/user-mm.png) no-repeat;
+	width:50px;
+	height:50px;
+	float:left;
+	background-position:50%;
+}
+.login .info .code
+{
+	width:298px;
+	margin:0 auto;
+	display: none;
+}
+.login .info .code img
+{
+	width: 80px;
+    height: 40px;
+    line-height:40px;
+    border-radius: 3px;
+    float:right;
+	margin-top: 18px;
+	cursor:pointer;
+}
+.login .info .code .value
+{
+	margin-top: 14px;
+    width: 208px;
+    height: 48px;
+    line-height: 48px;
+    background-color: #f4fbff;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+	float:left;
+
+}
+.login .info .code .value span
+{
+	display: block;
+    background:url(../img/user/user-yz.png) no-repeat;
+    width: 48px;
+    height: 48px;
+    float: left;
+    background-position: 50%;
+}
+.login .info .code input
+{
+	height: 46px;
+	line-height: 46px;
+    background-color: #f4fbff;
+    border: 0;
+    width: 142px;
+    color: #b0b3b4;
+	float:left;
+}
+.login .info input{
+	 font-size: 14px;
+}
+.login .cookie
+{
+	width:300px;
+	height:44px;
+	margin:0 auto;
+	clear:both;
+}
+.login .cookie .ck
+{
+	line-height:44px;
+}
+.login .cookie .ck p
+{
+	float:left;
+}
+.login .cookie .ck p span
+{
+	font-family:"微软雅黑";
+	color:#858585;
+	cursor:pointer;
+	vertical-align:middle;
+}
+.login .cookie .ck a
+{
+	color:#117bd8;
+	font-family:"微软雅黑";
+	float:right;
+	margin-right:5px;
+	margin-top:2px;
+}
+.login .logBTN
+{
+	width:300px;
+	height:40px;
+	margin:0 auto;
+	padding-bottom:20px;
+}
+.login .logBTN input
+{
+	width:298px;
+	line-height:40px;
+	background-color:#01a2f2;
+	color:#fff;
+	border:1px solid #01a2f2;
+	border-radius:4px;
+	font-family:"微软雅黑";
+	font-size:18px;
+	cursor:pointer;
+}
+.login .logBTN input:hover
+{
+	background-color:#09f;
+}
+.login .logBTN input:active
+{
+	background-color:#09c;
+}
+.login .reg
+{
+	width:150px;
+	margin:0 auto;
+	margin-bottom: 10px;
+}
+.login .reg span {
+	color:#787878;
+}
+.login .reg a
+{
+	color:#117bd8;
+	font-family:"微软雅黑";
+	font-size:14px;
+}
+.login .checkbox
+{
+	display:inline-block;
+	width:16px;
+	height:16px;
+	border:1px solid #d2d2d2;
+	background-color:#fff;
+	border-radius:5px;
+	vertical-align:middle;
+}
+.login .checkbox i
+{
+	line-height: 16px;
+    color: #858585;
+    font-size: 14px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    text-align: center;
+	cursor: pointer;
+}

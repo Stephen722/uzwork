@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="UZ_Site">
+	
+	<!-- <cache eviction="LRU" flushInterval="18000000" size="500" readOnly="true"/> -->
+
+    <!-- ***************************Selection************************** -->
+    <!-- Retrieve Information                                           -->
+    <!-- ************************************************************** -->
+    
+    <sql id="feedbackColumns">
+    	f.id, f.userId, f.content, f.createdIp, DATE_FORMAT(f.createdTime, "%Y-%m-%d %H:%i") createdTime 
+    </sql>
+        
+    <select id="getFeedback" parameterType="int" resultType="Map">
+		SELECT <include refid="feedbackColumns" />
+    	  FROM uz_feedback f
+    	 WHERE f.id = #{id}
+    </select>
+    
+    <select id="getAllFeedback" parameterType="Map" resultType="Map">
+		SELECT <include refid="feedbackColumns" />
+    	  FROM uz_feedback f
+		 LIMIT #{begin}, #{end}
+    </select>
+    <select id="getAllFeedbackTotal" parameterType="Map" resultType="int">
+		SELECT COUNT(f.id)
+    	  FROM uz_feedback f
+    </select>
+
+    <select id="getNumberOfFeedbackToday" parameterType="String" resultType="int">
+		SELECT count(id)
+    	  FROM uz_feedback f
+    	 WHERE f.createdIp = #{ip}
+    	   AND TO_DAYS(createdTime) = TO_DAYS(NOW())
+    </select>
+    
+    <select id="getProvinceAndCity" parameterType="String" resultType="Map">
+		SELECT ap.id provinceId, ap.name province, ac.id cityId, ac.name city
+    	  FROM uz_address_province ap, uz_address_city ac
+    	 WHERE ac.name like CONCAT('%',#{city},'%' )  
+    	   AND ac.provinceId = ap.id
+    </select>    
+    
+    <select id="getCity" parameterType="String" resultType="Map">
+		SELECT ac.id, ac.name, ac.provinceId
+    	  FROM uz_address_city ac
+    	 WHERE ac.name = #{city}  
+    </select>    
+    
+    <select id="getLatestVersionById" parameterType="Map" resultType="Map">
+		SELECT versionId, versionNumber, forceUpdate, updateURL
+    	  FROM uz_app_version
+    	 WHERE app = #{app}
+   	     ORDER BY versionId DESC
+  		 LIMIT 1
+    </select>
+    
+    <select id="checkForceUpdateByVersionId" parameterType="Map" resultType="int">
+		SELECT versionId
+    	  FROM uz_app_version
+		 WHERE versionId > #{versionId}
+		   AND app = #{app}
+		   AND forceUpdate = 1
+		 LIMIT 1
+    </select>     
+    <!-- ***************************Insertion************************** -->
+    <!-- Insert Information                                             -->
+    <!-- ************************************************************** -->	
+	<insert id="insertFeedback" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+		INSERT uz_feedback(userId, contact, content, createdIp, createdTime)
+	    VALUES (#{userId}, #{contact}, #{content}, #{createdIp}, now())
+	</insert>
+	 
+    <!-- ****************************Update**************************** -->
+    <!-- Update Information                                             -->
+    <!-- ************************************************************** -->	
+		
+    <!-- ****************************Delete**************************** -->
+    <!-- Delete Information                                             -->
+    <!-- ************************************************************** -->
+	<delete id="deleteFeedback" parameterType="int">
+		DELETE FROM uz_feedback
+		 WHERE id = #{id}
+	</delete>
+ 
+</mapper>

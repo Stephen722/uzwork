@@ -1,0 +1,51 @@
+﻿<html>
+<head>
+<title>UZWORK Login</title>
+<link rel="stylesheet" type="text/css" href="../static/style.css" />
+<script type="text/javascript" src="../static/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../static/api-script.js"></script>
+</head>
+<body style="background-color: #fff;">
+<div class="inner">
+验证手机号是否注册
+<hr size="1px">
+<table>
+	<tr><td class="label">接口地址：</td><td class="cont">{domain}/user/phone</td></tr>
+	<tr><td class="label">请求方式：</td><td>GET</td></tr>
+	<tr><td class="label">接口描述：</td><td class="cont">验证手机号码是否已注册。为了防止恶意循环遍历猜测注册用户手机号，如果同一个token用不同的手机号在一天内请求该接口达10次以上，疑似恶意攻击，后端返回错误提示。</td></tr>
+	<tr><td class="label">请求参数：</td><td>
+		<table>
+			<thead>
+				<tr><th class="td30">参数名</th><th class="td10">必选</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>cellPhone</td><td>Yes</td><td>String</td><td>11位有效手机号，前端验证为合法手机号后方可提交</td></tr>
+				<!-- <tr><td></td><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+	</td></tr>
+	<tr><td class="label">返回示例：</td><td>
+		<div class="json">
+{
+    "message": "未注册",
+    "success": false
+}
+		</div>
+	</td></tr>
+	<tr><td class="label">返回说明：</td><td>
+		<table>
+			<thead>
+				<tr><th class="td30">字段名</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>success</td><td>boolean</td><td>“true/false”代表“已注册/未注册”。<br>如果超过访问限制，疑似恶意攻击，后端返回false</td></tr>
+				<tr><td>message</td><td>String</td><td>返回消息“已注册”、“未注册”、“疑似恶意攻击”</td></tr>
+				
+				<!-- <tr><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+	</td></tr>
+</table>
+</div>
+</body>
+</html>

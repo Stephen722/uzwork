@@ -1,0 +1,342 @@
+@charset "utf-8";
+/* CSS Document */
+#us-bg
+{
+	background:url(../img/user/detail-bg.jpg) no-repeat center center;
+	width:100%;
+	min-height:800px;
+	background-color:#eeeeee;
+	position:relative;
+	margin:0;
+	background-position:50% 0;
+	padding-top:100px;
+	padding-bottom: 40px;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+    -moz-background-size:contain;
+    background-size:100% 400px;
+}
+#info
+{
+	width:1198px;
+	border:1px solid #fff;
+	border-radius:5px;
+	background-color:#fff;
+	margin: 0 auto;
+}
+#detail
+{
+	border-bottom: 1px solid #ebebeb;
+	width: 1166px;
+	margin:0 auto;
+}
+
+#info ul li
+{
+	float:left;
+}
+#detail .icon
+{
+	margin: 40px 50px 0 30px;
+}
+#detail .icon img
+{
+	width: 150px;
+    height: 150px;
+	border-radius: 10%;
+}
+#detail .icon span
+{
+	background-color: #A0C1E3;
+    border-radius: 50px;
+    color: #fff;
+    display: block;
+    width: 86px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    margin-left: 26px;
+    margin-top: 14px;
+	cursor: pointer;
+}
+#detail .desc
+{	min-height: 450px;
+    width: 660px;
+    border-right: 1px solid #ebebeb;
+}
+#detail .desc .title
+{
+	font-size: 24px;
+    font-weight: bold;
+	display:block;
+	margin-top:40px;
+}
+#detail .desc .title span
+{
+	font-size: 20px;
+	color: #3B5E7D;
+	margin-left: 20px;
+}
+#detail .desc .adv
+{
+	height:50px;
+}
+#detail .desc .adv i
+{
+	display: inline-block;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    padding: 4px 6px;
+    cursor: pointer;
+    margin-top: 12px;
+    color: #4d4d4d;
+	margin-right: 8px;
+}
+#detail .desc .me
+{
+	background:url(../img/user/detail-shu.png) no-repeat;
+	height:20px;
+	margin: 20px 0;
+}
+#detail .desc .me em
+{
+	font-size: 18px;
+	margin-left:10px;
+	line-height:18px;
+	font-weight: bold;
+}
+#detail .desc .ct
+{
+	margin: 5px 30px 40px 0;
+	line-height: 24px;
+}
+#detail .desc .skill
+{
+	padding-bottom:28px;
+}
+#detail .desc .skill i
+{
+	display: inline-block;
+    width: 98px;
+    height: 28px;
+    text-align: center;
+    border-radius: 15px;
+    line-height: 28px;
+	margin-bottom: 10px;
+    margin-right: 16px;
+}
+#detail .desc .skill .sk0
+{
+	border: 1px solid #00A0E9;
+	color:#00A0E9;
+}
+#detail .desc .skill .sk1
+{
+	border: 1px solid #5BC879;
+	color:#5BC879;
+}
+#detail .desc .skill .sk2
+{
+	border: 1px solid #ff0000;
+	color:#ff0000;
+}
+#detail .desc .skill .sk3
+{
+	border: 1px solid #EC6941;
+	color:#EC6941;
+}
+#detail .desc .skill .sk4
+{
+	border: 1px solid #8957A1;
+	color:#8957A1;
+}
+#detail .desc .skill .sk5
+{
+	border: 1px solid #000080;
+	color:#000080;
+}
+#detail .desc .skill .sk6
+{
+	border: 1px solid #117bd8;
+	color:#117bd8;
+}
+#detail .desc .skill .sk7
+{
+	border: 1px solid #804040;
+	color:#804040;
+}
+#detail .desc .skill .sk8
+{
+	border: 1px solid #008040;
+	color:#008040;
+}
+#detail .desc .skill .sk9
+{
+	border: 1px solid #ff8000;
+	color:#ff8000;
+}
+.score
+{
+	margin-top:60px;
+	margin-left:25px;
+}
+.score .invite
+{
+    width: 230px;
+    height: 42px;
+    border: 1px solid #00A0E9;
+    background-color: #00A0E9;
+    color: #fff;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 42px;
+    font-size: 20px;	
+    cursor: pointer;
+}
+.score .done
+{
+	background:url(../img/user/detail-img1.png) no-repeat;
+	width:150px;
+	height:22px;
+	margin-top:16px;
+	margin-left:46px;	
+}
+.score p span
+{
+	font-size: 15px;
+	margin-left:30px;
+	line-height:22px;
+}
+.score i
+{
+	display: inline-block;
+    margin-top: 46px;
+    font-size: 16px;
+}
+.score b
+{
+	display: inline-block;
+	width:90px;
+	height:13px;
+	margin-left:20px;
+}
+.score div 
+{
+	margin-top:40px;
+}
+.score div em
+{
+	display: block;
+    font-size: 22px;
+    color: #F99E3C;
+    text-align: center;
+}
+.score div em span
+{
+    font-size: 14px;
+	opacity: 0.9;
+}
+
+.score div .img
+{
+	background:url(../img/user/detail-shu1.png) no-repeat;
+    width: 1px;
+    height: 35px;
+    float: left;
+    margin-left: 24px;
+	margin-right: 24px;
+    margin-top: 10px;
+}
+.score div .float
+{
+	float:left;
+	margin:0;
+}
+.score .float .text
+{
+	color:#AEAEAE;
+}
+#works
+{
+	margin-top:44px;
+}
+#works #title
+{
+	width:510px;
+	margin:0 auto;
+	padding-bottom:40px;
+}
+#works #title i
+{
+	display:inline-block;
+	background:url(../img/line1.png) no-repeat;
+	width:185px;
+	height:2px;
+	vertical-align:middle;
+}
+#works #title span
+{
+	font-size:26px;
+	margin-right:12px;
+	margin-left:12px;
+}
+#works #title b
+{
+	display:inline-block;
+	background:url(../img/line2.png) no-repeat;
+	width:185px;
+	height:2px;
+	vertical-align:middle;
+}
+#works #list
+{
+	width:875px;
+	margin:0 auto;
+}
+#works #list .item
+{
+	margin-bottom:30px;
+}
+#works #list .item img
+{
+	width:100%;
+	border-radius: 4px;
+}
+#works #list .item .text
+{
+	min-height:120px;
+	border-radius: 4px;
+	border:1px solid #efefef;
+}
+#works #list .item .text p
+{
+    margin: 10px 0 0 28px;
+    width: 830px;
+}
+#works #list .item .text p b
+{
+	font-size: 22px;
+}
+#works #list .item .text  p i
+{
+    color: #fff;
+    background-color: #F9AB57;
+    border-radius: 10px;
+    margin-left: 6px;
+    padding: 4px 8px;
+}
+#works #list .item .text span
+{	
+	display: block;
+    color: #959595;
+    padding-bottom: 10px;
+}
+#works #list .item .text a
+{
+	float: right;
+	margin-top: 10px;
+    margin-right: 20px;
+    text-decoration: underline;
+    color: #256AAB;
+    font-size: 16px;
+    
+}

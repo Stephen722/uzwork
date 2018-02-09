@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+    <!-- ************************************************************** -->
+    <!-- Import the configurations of base                              -->
+    <!-- ************************************************************** -->
+    <import resource="classpath:config/applicationConfig-base.xml"/>
+    
+    <!-- ************************************************************** -->
+    <!-- Define Action					                                -->
+    <!-- ************************************************************** -->    
+    <bean id="MobileBaseAction" class="com.uzskill.mobile.action.MobileBaseAction" parent="BaseAction" abstract="true" />
+
+	<bean id="com.uzskill.mobile.action.ErrorAction" class="com.uzskill.mobile.action.ErrorAction" parent="MobileBaseAction" scope="prototype" />
+	
+    <bean id="com.uzskill.mobile.token.AccessTokenAction" class="com.uzskill.mobile.token.AccessTokenAction" parent="MobileBaseAction" scope="prototype" />
+ 
+    <bean id="com.uzskill.mobile.init.InitializationAction" class="com.uzskill.mobile.init.InitializationAction" parent="MobileBaseAction" scope="prototype">
+    	<property name="siteManager" ref="SiteManager" />
+    	<property name="userManager" ref="UserManager" />
+    	<property name="messageManager" ref="MessageManager" />
+    </bean>
+        
+    <bean id="com.uzskill.mobile.user.UserAction" class="com.uzskill.mobile.user.UserAction" parent="MobileBaseAction" scope="prototype">
+		<property name="userManager" ref="UserManager" />
+		<property name="messageManager" ref="MessageManager" />
+    </bean>  
+    
+    <bean id="com.uzskill.mobile.code.IdentifyingCodeAction" class="com.uzskill.mobile.code.IdentifyingCodeAction" parent="MobileBaseAction" scope="prototype" />
+    
+    <bean id="com.uzskill.mobile.topic.TopicAction" class="com.uzskill.mobile.topic.TopicAction" parent="MobileBaseAction" scope="prototype">
+		<property name="topicManager" ref="TopicManager" />
+    </bean>
+    
+</beans>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="UZ_Authorization">
+
+	<cache eviction="LRU" flushInterval="18000000" size="6" readOnly="true"/>
+
+    <!-- ***************************Selection************************** -->
+    <!-- Retrieve User Authorization Information                        -->
+    <!-- ************************************************************** -->
+    <select id="getAuthorizationByCode" parameterType="int" resultType="Authorization">
+		SELECT id, code, dues, bid, post, skill, invited, price1, price2, informed
+    	  FROM uz_authority ua
+    	 WHERE ua.code = #{code}
+    </select>
+ 
+    <!-- ***************************Insertion************************** -->
+    <!-- Insert User Authorization Information                          -->
+    <!-- ************************************************************** -->	
+	
+	
+    <!-- ****************************Update**************************** -->
+    <!-- Update User Authorization Information                          -->
+    <!-- ************************************************************** -->	
+	
+		
+    <!-- ****************************Delete**************************** -->
+    <!-- Delete User Authorization Information                          -->
+    <!-- ************************************************************** -->
+	
+</mapper>

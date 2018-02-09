@@ -1,0 +1,50 @@
+﻿<html>
+<head>
+<title>UZWORK Login</title>
+<link rel="stylesheet" type="text/css" href="../static/style.css" />
+<script type="text/javascript" src="../static/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../static/api-script.js"></script>
+</head>
+<body style="background-color: #fff;">
+<div class="inner">
+基础参数
+<hr size="1px">
+<table>
+	<tr><td class="label">说明：</td><td class="cont">系统所有接口访问请求都需要在头部 <i>http header</i> 中包含以下两个基础参数，后续接口定义中不再对这些参数做定义描述。</td></tr>
+	<tr><td class="label">请求参数：</td><td>
+		<table>
+			<thead>
+				<tr><th class="td30">参数名</th><th class="td10">必选</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>Accept-Channel</td><td>Yes</td><td>String</td><td>请求来源，分为APP和浏览器；APP访问时其值为"UZAPP_V1"，浏览器访问时其值为"browser"。</td></tr>
+				<tr><td>Access-Token</td><td>Yes</td><td>String</td><td>访问token，如果无法从本地取得token或其值为空，则可以通过调用<a class="link" cat="global" page="token">“生成token”</a>取得，并将其保持到本地，以便后续使用。</td></tr>
+				<!-- <tr><td></td><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+	</td></tr>
+	<tr><td></td><td><b>任何访问请求如不包含以上基本参数或参数无效，被认为是一个无效请求，则返回：</b></td></tr>
+	<tr><td class="label">返回示例：</td><td>
+		<div class="json">
+{
+    "message": "Access forbidden",
+    "success": false
+}
+		</div>
+	</td></tr>
+	<tr><td></td><td><b>任何访问请求的正常返回结果都包含以下两个字段：</b></td></tr>
+	<tr><td class="label">返回说明：</td><td>
+		<table>
+			<thead>
+				<tr><th class="td30">字段名</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>success</td><td>boolean</td><td>“true/false”代表“成功/失败”</td></tr>
+				<tr><td>message</td><td>String</td><td>返回消息</td></tr>
+			</tbody>
+		</table>
+	</td></tr>
+</table>
+</div>
+</body>
+</html>

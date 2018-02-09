@@ -1,0 +1,779 @@
+.fff {
+	background-color:#fff;
+}
+.eee {
+	background-color:#eee;
+}
+.top{width:100%;min-width:1000px;position:absolute;z-index:1000;top:0;left:0;}
+
+@media screen and (max-width:1000px){
+}
+
+/** Banner Area */
+.banner {
+	position:relative;
+	height:350px;
+}
+.ban-project {
+	background:url(../img/banner/ban-project.jpg) no-repeat center center;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+    -moz-background-size:100% 100%;
+    background-size:100% 100%;
+}
+.ban-user {
+	background:url(../img/banner/ban-user.jpg) no-repeat center center;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+    -moz-background-size:100% 100%;
+    background-size:100% 100%;
+}
+.ban-cat {
+	background:url(../img/banner/ban-cat.jpg) no-repeat center center;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+    -moz-background-size:100% 100%;
+    background-size:100% 100%;
+}
+.ban-post-success {
+	height:150px;
+	color: #fff;
+    text-align: center;
+    font-size: 50px;
+    padding-top: 40px;
+    letter-spacing: 4px;
+	background:url(../img/banner/ban-common.jpg) no-repeat;
+	-moz-background-size:100% 100%;
+    background-size:100% 100%;
+}
+.ban-text {
+    color: #fff;
+    text-align: center;
+    padding-top: 80px;
+}
+.ban-text .cat b{
+	padding: 0 5px;
+	font-size: 30px;
+	height: 45px;
+	line-height: 36px;
+	display: inline-block;
+	border-bottom: 2px solid #09f;
+}
+.ban-text .sub {
+	font-size: 16px;
+    margin: 30px 0 30px 0;
+}
+.ban-text .sub ul{
+	display:inline-block;
+}
+.ban-text .sub li {
+	float: left;
+	height: 18px;
+	line-height: 18px;
+}
+.ban-text .sub li i{
+	margin: 0 6px;
+	color: #ccc;
+}
+.ban-text .twoBTN a{
+	width: 160px;
+    height: 45px;
+    line-height: 45px;
+	margin: 30px;
+    color: #fff;
+    border: 1px solid #fff;
+    font-size: 16px;
+    border-radius: 8px;
+    display: inline-block;
+    background-color: transparent;
+}
+.ban-text .twoBTN a:hover{
+	border: 1px solid #09f;
+    background-color: #09f;
+}
+/* Head CSS Begin*/
+#head {
+	height: 50px;
+	font-size: 16px;
+    background-color: #fff;
+    padding-top:25px;
+}
+#head .left {
+	float: left;
+    width: 700px;
+    margin-left: 30px;
+}
+
+#head .left .logo{
+ 	float: left;
+    width: 220px;
+}
+#head .left .logo a{
+	font-size: 0;
+    display: block;
+}
+#head .left .logo a img{
+	width: 100%;
+	height:26px;
+}
+#head .left #nav{
+    color: #606060;
+    margin-left: 300px;
+}
+#head .left #nav li{
+	float: left;
+    margin-right: 30px;
+}
+#head .left #nav li{
+	cursor:pointer;
+}
+#head .left #nav li span{
+	display: inline-block;
+    vertical-align: middle;
+    position: relative;
+}
+#head .left #nav li span a{
+	color: #606060;
+}
+#head .left #nav li span a:hover
+{
+	color: #01A2F2;
+}
+#head .left #nav .sel a{
+	color: #01A2F2;
+}
+#head .left #nav li i{
+	background: url(../img/head-select-blank.png) no-repeat;
+    display: inline-block;
+    width: 8px;
+    height: 26px;
+    background-position: 50%;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+#head .right {	
+	float: right;
+	margin-right: 30px;
+}
+#head .right li {
+	float: left;
+    margin-left: 15px;
+}
+#head .right li img {
+    width: 40px;
+    border-radius:50%;
+}
+#head .right li a {
+	display: block;
+    color: #606060;
+}
+#head .right .me i{
+	background: url(../img/head-select-blank.png) no-repeat;
+    width: 12px;
+    height: 22px;
+    margin-left: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    background-position: 50%;
+}
+#head .right .me {
+	width: 120px;
+	text-align:center;
+	overflow: hide;
+}
+#head .right .me span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 22px;
+}
+#head .right .me dl {
+	font-size: 14px;
+    text-align: center;
+    display: none;
+    width: 120px;
+    line-height: 35px;
+    background-color: #fff;
+    position: absolute;
+    z-index: 9999;
+}
+#head .right .me dl dd a{
+	color: #444;
+}
+#head .right .me dl dd:hover {
+	background-color:#01A2F2;
+}
+#head .right .me dl dd:hover a{
+	color:#fff;
+}
+/* Head CSS End*/
+/* Foot CSS Begin */
+#foot
+{
+	background-color:#012240;
+}
+#foot .data
+{
+	padding: 30px 0;
+}
+#foot .data .left
+{
+	float: left;
+}
+#foot .data .left .logo
+{
+	background:url(../img/bottom-logo.png) no-repeat;
+	width: 220px;
+    height: 25px;
+}
+#foot .data .left .text
+{
+	color: #7F909F;
+    font-size: 26px;
+    margin-top: 5px;
+}
+#foot .data .right
+{
+	float: right;
+}
+#foot .data .right li
+{
+	float: left;
+    color: #7F909F;
+    padding-left: 50px;
+    position: relative;
+    margin-left: 50px;
+}
+#foot .data .right li:before
+{
+	content: "";
+    width: 1px;
+    background-color: #344E66;
+    height: 60px;
+    top: 2px;
+    left: 0;
+    position: absolute;
+}
+#foot .data .right li:first-child:before
+{
+	width:0;
+}
+#foot .data .right .sz
+{
+	font-size: 30px;
+}
+#foot .data .right .tx
+{
+	text-align: center;
+    margin-top: 5px;
+	color: #4D6479;
+}
+#foot .bot
+{
+	margin-top:20px;
+}
+#foot .bot .nav
+{
+	float: left;
+}
+#foot .bot .nav a
+{
+	color: #7F909F;
+    font-size: 14px;
+    margin-right: 30px;
+}
+
+#foot .bot .qq
+{
+	float: right;
+}
+#foot .bot.qq i
+{
+	background: url(../img/bottom-iocn.png) no-repeat;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+}
+#foot .bot .qq span
+{
+	display: inline-block;
+    vertical-align: middle;
+    color: #7F909F;
+    margin-left: 10px;
+}
+.copyright{
+	color: #4D6479;
+    text-align: center;
+    padding-top: 40px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding-bottom: 20px;
+}
+/* Foot CSS End */
+
+/* Drop down select CSS Begin */
+.dd-select li dl {
+	font-size: 14px;
+	display: none;
+    text-align: center;
+    width: 100px;
+    line-height: 32px;
+    background-color: #fff;
+    border: 1px solid #f1f1f1;
+    position: absolute;
+    margin-left: 16px;
+    z-index: 9999;
+    border-radius: 0 0 4px 4px;
+}
+.dd-select li dl dd {
+	cursor: pointer;
+}
+.dd-select li dl dd a{
+	color: #444;
+}
+.dd-select li dl dd:hover {
+	color:#fff;
+	background-color:#01A2F2;
+}
+/* Drop down select CSS End */
+/* User/Project/Category Filter Area CSS Begin */
+#filter {
+	font-size: 16px;
+	padding: 20px 0;
+	margin-bottom: 30px;
+    box-shadow: 0 10px 25px -10px #000;
+}
+#filter ul
+{
+	float: left;
+}
+#filter li
+{
+	float: left;
+    margin-right: 16px;
+    cursor: pointer;
+}
+#filter li .sel{
+	color:#01A2F2;
+}
+#filter li .sel:hover {
+	background-color:#fff;
+	cursor: auto;
+}
+#filter li i {
+	background: url(../img/nav.png) no-repeat;
+    width: 20px;
+    height: 26px;
+    background-position: 50%;
+    display: inline-block;
+    vertical-align: middle;
+}
+#filter li span
+{
+	display: inline-block;
+    line-height: 26px;
+    vertical-align: middle;
+    margin-left: 6px;
+    width: 91px;
+}
+#filter li span b{
+    display: inline-block;
+    margin-right: 5px;
+}
+#filter li span em{
+	background: url(../img/list-select.png) no-repeat;
+    width: 12px;
+    height: 20px;
+    display: inline-block;
+    margin-top: -3px;
+    vertical-align: middle;
+    background-position: 50%;
+}
+#filter .list1 i
+{
+	background: url(../img/list-iocn.png) no-repeat;
+    background-position: 3px 50%;
+}
+#filter .list2 i
+{
+	background:url(../img/list-iocn.png) no-repeat;
+	background-position: -19px 50%;
+}
+#filter .list2 span {
+	text-align: center;
+}
+#filter .list3 i
+{
+	background:url(../img/list-iocn.png) no-repeat;
+	background-position: -42px 50%;
+}
+#filter .list3 span
+{
+	cursor: pointer;	
+}
+#filter .total
+{
+	float: right;
+	line-height: 26px;
+}
+#filter .total i
+{
+	color:#ff4200;
+	margin: 0 3px;
+	font-size: 16px;
+}
+
+#filter .cat ul
+{
+	float: none;
+	width: 500px;
+    margin: 0 auto;
+}
+#filter .cat ul li
+{
+	width: 120px;
+    float: left;
+    margin-right: 3px;
+    text-align: center;
+    cursor: pointer;
+}
+#filter .cat ul .sel-li{
+	color:#01A2F2;
+}
+#filter .cat dl dd a:hover {
+	color:#fff;
+	background-color:#01A2F2;
+}
+
+/* User/Project/Category Filter Area CSS End */
+
+/* User List CSS Begin */
+.ur-ls li
+{
+	padding: 30px 15px;
+	border: 1px solid #fff;
+    border-bottom: 1px solid #ccc;
+}
+.ur-ls li:hover
+{
+	background-color: #fafafa;
+	border: 1px solid #00A0E9;
+	border-bottom: 1px solid #00A0E9;
+	border-radius: 4px;
+}
+.ur-ls li .photo
+{
+	width: 118px;
+    height: 118px;
+    float: left;
+	text-align: center;
+}
+.ur-ls li .photo img
+{
+	width: 118px;
+    height: 118px;
+    margin-bottom: 25px;
+	border-radius: 100%;
+}
+.ur-ls li .photo em
+{
+	display:block;
+}
+.ur-ls li .photo em img
+{
+	width: 10px;
+    height: 10px;
+}
+.ur-ls li .info
+{
+	margin: 0 580px 0 138px;
+	padding-top: 10px;
+}
+.ur-ls li .info a:hover
+{
+	text-decoration:underline;
+}
+
+.ur-ls li .info .name span
+{
+	color: #313131;
+    display: inline-block;
+    font-size: 18px;
+    vertical-align: middle;
+}
+.ur-ls li .info .name i
+{
+	display: inline-block;
+    vertical-align: middle;
+    color: #000;
+    margin: 0 5px;
+}
+.ur-ls li .info .name em
+{
+	color: #3B5E7D;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.ur-ls li .info .tag
+{
+	color: #868686;
+    font-size: 14px;
+	padding-top: 5px;
+    padding-bottom: 10px;
+}
+.ur-ls li .info .tag i
+{
+	color: #868686;
+    font-size: 14px;
+    margin-right: 5px;
+}
+.ur-ls li .info .adv
+{
+	color: #242424;
+    font-size: 16px;
+	line-height: 26px;
+	max-height: 130px;
+	overflow: hidden;
+}
+
+.ur-ls li .writing
+{
+	float: right;
+}
+.ur-ls li .writing p
+{
+	float: left;
+    background-color: #fff;
+    padding: 5px;
+    margin-left: 10px;
+    border-radius: 3px;
+    box-shadow: 1px 2px 5px 1px #ccc;
+}
+.ur-ls li .writing p:hover {
+	background-color: #fdfdfd;
+}
+.ur-ls li .writing b{
+	margin: 0 2px 6px 2px;
+	display: block;
+	color: #3B5E7D;
+	width: 160px;
+	height: 20px;
+	overflow: hidden;
+}
+.ur-ls li .writing span
+{
+	display: block;
+    width: 160px;
+    height: 130px;
+    line-height: 22px;
+    overflow: hidden;
+}
+.ur-ls li .writing img
+{
+	width: 100%;
+    height: 100%;
+}
+.ur-ls .empty{
+	font-size: 18px;
+	margin: 30px 0;
+}
+/* User List CSS End */
+/* Project List CSS Begin */
+.pj-ls ul {
+	display: block;
+}
+.pj-ls li
+{
+	float: left;
+    width: 400px;
+	margin: 20px 0;
+}
+.pj-ls li .box:hover
+{
+	background-color: #fafafa;
+	border: 1px solid #cacaca;
+}
+.pj-ls li .box {
+	width: 360px;
+	height: 350px;
+	line-height: 40px;
+	padding: 20px 4px 4px 4px;
+	margin: 0 auto;
+	text-align: center;
+	color: #8D8E90;
+    background-color: #fff;
+	border-radius: 4px;
+	box-shadow: 1px 2px 5px -1px #ddd;
+	border: 1px solid #d5d5d5;
+}
+.pj-ls li .box .status i{
+	width: 62px;
+    height: 24px;
+    text-align: center;
+    color: #fff;
+    background-color: #01A2F2;
+    border-radius: 3px;
+    padding: 4px 10px;
+}
+.pj-ls li .box .title {
+	color: #2B2B2B;
+    font-size: 20px;
+    height: 40px;
+    overflow: hidden;
+}
+.pj-ls li .box .price
+{
+	color: #FF6000;
+    font-size: 18px;
+}
+.pj-ls li .box .duration 
+{
+	color: #01A2F2;
+    font-size: 18px;
+}
+.pj-ls li .box .time{
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd;
+}
+.pj-ls li .box dl {
+	margin: 20px 0 0 35px;
+}
+.pj-ls li .box dl dd{
+	width: 100px;
+	height: 40px;
+	float: left;
+	line-height: 25px;
+}
+.pj-ls li .box dl dd i{
+	color: #444;
+	margin-right: 4px;
+}
+.pj-ls .empty{
+	font-size: 18px;
+	margin: 30px 0;
+}
+/* Project List CSS End */
+/* Case List CSS Begin */
+.cs-ls .list li
+{
+	width: 33.3%;
+    float: left;
+	margin-bottom: 20px;
+}
+.cs-ls .list li .photo
+{
+	display: block;
+    background-color: #fff;
+    padding-top: 15px;
+    width: 380px;
+    margin: 0 auto;
+}
+.cs-ls .list li .photo .img
+{
+	width: 350px;
+    height: 248px;
+    margin: 0 auto;
+}
+.cs-ls .list li .photo .img img
+{
+	width: 100%;
+    height: 100%;
+}
+.cs-ls .list li .photo .text
+{
+	padding:0 15px;
+    height: 50px;
+    line-height: 50px;
+}
+.cs-ls .list li .photo .text span
+{
+	color: #242424;
+}
+.cs-ls .list li .photo .text i
+{
+	float: right;
+    color: #858585;
+}
+.cs-ls .list li .author
+{
+	display: block;
+    height: 25px;
+    line-height: 25px;
+    width: 350px;
+    padding: 5px 15px;
+}
+.cs-ls .list li .author i
+{
+	display: inline-block;
+    font-size: 0;
+    vertical-align: middle;
+	height: 26px;
+}
+.cs-ls .list li .author i img
+{
+	width:26px;
+	height:26px;
+}
+.cs-ls .list li .author span
+{
+	display: inline-block;
+    vertical-align: middle;
+    color: #3B5E7D;
+}
+.cs-ls .list li .author em
+{
+	display: inline-block;
+    vertical-align: middle;
+}
+.cs-ls .list li .author em img
+{
+	width: 10px;
+    height: 10px;
+}
+/* Case List CSS End */
+.cat-more a
+{
+	width: 300px;
+    height: 40px;
+    margin: 40px auto;
+    display: block;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 5px;
+    background-color: #00A0E9;
+    color: #fff;
+    font-size: 18px;
+}
+
+.post-result {
+	height: 450px;
+	text-align: center;
+	font-size: 22px;
+}
+.post-result img {
+	margin-top: 50px;
+	width:160px
+}
+.post-result p{
+	margin-top: 20px;
+}
+.post-result .btn {
+	display: inline-block;
+	margin: 0 auto;
+	margin-top: 50px;
+    width: 200px;
+    height: 50px;
+    background-color: #01A2F2;
+    line-height: 50px;
+    font-size: 20px;
+    border-radius: 5px;
+}
+.post-result .btn2 {
+	margin-left: 30px;
+	background-color: #a2a2a2;
+}
+.post-result .btn a{
+	color: #fff;
+}
+.post-result .btn:hover{
+	background-color: #0191d6;
+	color: #fff;
+}

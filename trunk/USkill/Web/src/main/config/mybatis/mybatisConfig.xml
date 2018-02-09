@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
+  "http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+<!-- Always ensure to use the correct XML header as above! -->
+<configuration>
+
+	<!-- ************************************************************** -->
+    <!-- Database connection property                                   -->
+    <!-- ************************************************************** -->
+	<properties resource="config/db.properties" />
+	
+	<!-- ************************************************************** -->
+    <!-- Mybatis Setting                                                -->
+    <!-- ************************************************************** -->
+	<settings>
+		<!--setting name="enhancementEnabled" value="true" />-->
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="defaultStatementTimeout" value="30" />
+		<setting name="logImpl" value="LOG4J"/>
+	</settings>
+	
+	<!-- ************************************************************** -->
+    <!-- Type Aliases                                                   -->
+    <!-- ************************************************************** -->	
+	<typeAliases>
+		<typeAlias alias="User" type="com.uzskill.base.user.bean.User"/>
+		<typeAlias alias="Topic" type="com.uzskill.base.topic.bean.Topic"/>
+		<typeAlias alias="Skill" type="com.uzskill.base.skill.bean.Skill"/>
+	</typeAliases>
+	
+	<!-- ************************************************************** -->
+    <!-- Mybatis Environments                                           -->
+    <!-- ************************************************************** -->	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="${dbDriver}"/>
+				<property name="url" value="${dbUrl}"/>
+				<property name="username" value="${dbUsername}"/>
+				<property name="password" value="${dbPassword}"/>
+				<property name="poolMaximumActiveConnections" value="1000"/>
+				<property name="poolMaximumIdleConnections" value="50"/>
+				<property name="poolTimeToWait" value="60000"/>
+				<property name="poolPingEnabled" value="true"/>
+				<property name="poolPingQuery" value="SELECT NOW()"/>
+				<property name="poolPingConnectionsNotUsedFor" value="3600000"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- ************************************************************** -->
+    <!-- Mappers                                                        -->
+    <!-- ************************************************************** -->
+	<mappers>
+		<mapper resource="config/mybatis/mapper/SK_User.xml" />
+		<mapper resource="config/mybatis/mapper/SK_Topic.xml" />
+		<mapper resource="config/mybatis/mapper/SK_Skill.xml" />
+	</mappers>
+	
+</configuration>

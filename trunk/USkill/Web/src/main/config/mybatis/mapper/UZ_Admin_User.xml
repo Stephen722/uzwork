@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="UZ_Admin_User">
+	
+	<!-- ************************Define Section************************ -->
+    <!-- Define the result map. If we don't define this resultMap,      -->
+    <!-- ibatis returns prototype and uppercase columns(userId/USERID). -->
+    <!-- ************************************************************** -->	
+
+    <sql id="adminUserColumns">
+    	a.adminId, a.username, a.groupId, a.activeB, a.logins, DATE_FORMAT(a.loginTime, "%Y-%m-%d %H:%i") loginTime, a.loginIp, a.createdBy, DATE_FORMAT(a.createdTime, "%Y-%m-%d %H:%i") createdTime
+    </sql>
+    
+    <!-- ***************************Selection************************** -->
+    <!-- Retrieve User Information                                      -->
+    <!-- ************************************************************** -->
+    <select id="getAdminUserById" parameterType="int" resultType="AdminUser">
+		SELECT <include refid="adminUserColumns" />
+    	  FROM uz_admin a
+    	 WHERE a.adminId = #{adminId}
+    </select>
+    
+    <select id="getAdminUserByName" parameterType="String" resultType="AdminUser">
+		SELECT <include refid="adminUserColumns" />
+    	  FROM uz_admin a
+    	 WHERE a.username=#{username}
+    </select>
+    
+    <sql id="FromWhereClauseForGetAllAdminUser">
+		FROM uz_admin a 
+	   WHERE 1=1
+	  	<if test="keywords != null and keywords != '' "> 
+			AND (a.username LIKE CONCAT('%',#{keywords},'%'))
+		</if>
+    </sql>
+    <select id="getAllAdminUserTotal" parameterType="Map" resultType="int">
+		SELECT COUNT(a.adminId)
+    	<include refid="FromWhereClauseForGetAllAdminUser" />
+    </select>
+    <select id="getAllAdminUser" parameterType="String" resultType="AdminUser">
+		SELECT <include refid="adminUserColumns" />
+    	 <include refid="FromWhereClauseForGetAllAdminUser" />
+    	 ORDER BY a.adminId DESC
+    	 LIMIT #{begin},#{end}
+    </select>
+    
+    <select id="loginAdminUser" parameterType="Map" resultType="AdminUser">
+		SELECT <include refid="adminUserColumns" />
+    	  FROM uz_admin a
+    	 WHERE a.username=#{username}
+    	   AND a.password=#{password}
+    </select>
+   
+    <!-- ***************************Insertion************************** -->
+    <!-- Insert Admin User Information                                  -->
+    <!-- ************************************************************** -->	
+	<insert id="insertAdminUser" parameterType="AdminUser" useGeneratedKeys="true" keyProperty="adminId">
+		INSERT uz_admin(username, password, groupId, activeB, createdBy, createdTime)
+	    VALUES (#{username}, #{password}, #{groupId}, #{activeB}, #{createdBy}, now())
+	</insert>
+	
+    <!-- ****************************Update**************************** -->
+    <!-- Update Admin User Information                                  -->
+    <!-- ************************************************************** -->	
+	<update id="updateAdminUser" parameterType="Map">
+		UPDATE uz_admin
+		   SET adminId = #{adminId}
+    	 <if test="password != null">
+    	 	 , password = #{password}
+    	 </if>
+    	 <if test="group != null">
+    	 	 , 'group' = #{group}
+    	 </if>
+    	 <if test="activeB != null">
+    	 	 , activeB = #{activeB}
+    	 </if>
+		 WHERE adminId = #{adminId}
+	</update>
+	
+	<update id="updateLoginInformation" parameterType="AdminUser">
+		UPDATE uz_admin
+		   SET logins = logins + 1, loginIp = #{loginIp}, loginTime = now()
+		 WHERE adminId = #{adminId}
+	</update>
+	
+	<update id="changePassword" parameterType="AdminUser">
+		UPDATE uz_admin
+		   SET password = #{password}
+		 WHERE adminId = #{adminId}
+	</update>
+		
+    <!-- ****************************Delete**************************** -->
+    <!-- Delete Admin User Information                                  -->
+    <!-- ************************************************************** -->
+	<delete id="deleteAdminUser" parameterType="int">
+		DELETE FROM uz_admin
+		 WHERE adminId = #{adminId}
+	</delete>
+ 
+</mapper>

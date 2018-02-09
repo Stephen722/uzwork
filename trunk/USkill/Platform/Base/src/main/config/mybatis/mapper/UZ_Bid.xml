@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="UZ_Bid">
+	
+	<cache eviction="LRU" flushInterval="18000000" size="1000" readOnly="true"/>
+
+    <!-- ***************************Selection************************** -->
+    <!-- Retrieve Information                                           -->
+    <!-- ************************************************************** -->
+    
+    <sql id="bidColumns">
+    	pb.id, pb.userId, pb.projectId, pb.price, pb.proposal, pb.createdTime
+    </sql>
+        
+    <select id="getAllBidByProjectId" parameterType="int" resultType="Bid">
+		SELECT <include refid="bidColumns" />
+    	  FROM uz_project_bid pb
+    	 WHERE pb.projectId = #{projectId}
+    	 LIMIT #{begin}, #{end}
+    </select>
+    
+    <select id="getAllBidByUserId" parameterType="int" resultType="Bid">
+		SELECT <include refid="bidColumns" />
+    	  FROM uz_project_bid pb
+    	 WHERE pb.userId = #{userId}
+    	 LIMIT #{begin}, #{end}
+    </select>
+ 
+    <!-- ***************************Insertion************************** -->
+    <!-- Insert Information                                             -->
+    <!-- ************************************************************** -->	
+	<insert id="insertBid" parameterType="Bid" useGeneratedKeys="true" keyProperty="id">
+		INSERT uz_project_bid(userId, projectId, price, proposal, createdTime)
+	    VALUES (#{userId}, #{projectId}, #{price}, #{proposal}, #{createdTime})
+	</insert>
+	 
+    <!-- ****************************Update**************************** -->
+    <!-- Update Information                                             -->
+    <!-- ************************************************************** -->	
+	
+    <!-- ****************************Delete**************************** -->
+    <!-- Delete Information                                             -->
+    <!-- ************************************************************** -->
+	<delete id="deleteBid" parameterType="int">
+		DELETE FROM uz_project_bid
+		 WHERE id = #{bidId}
+	</delete>
+ 
+</mapper>

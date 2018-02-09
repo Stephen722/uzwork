@@ -1,0 +1,278 @@
+@charset "utf-8";
+/* CSS Document color:#256AAB; */
+#user-bg
+{
+	height:700px;
+	background-color:#eeeeee;
+}
+#user-bg #reg
+{
+	width:1200px;
+	margin:0 auto;
+}
+#reg .left
+{
+	background:url(../img/user/user-logo.png) no-repeat;
+	width:533px;
+	height:383px;
+	float: left;
+    margin-top: 135px;
+    padding-right: 165px;
+}
+#reg .right
+{
+	width:450px;
+	min-height:540px;
+	background-color:#ffffff;
+	margin-top:60px;
+	float:left;
+	border:1px solid #eeeeee;
+	border-radius:6px;
+	padding-bottom: 10px;
+}
+#reg .right .top
+{
+	padding-bottom:40px;
+	width:440px;
+	margin:0 auto;
+}
+#reg .right .top p
+{
+	color:#7b7b7b;
+	font-size:24px;
+	font-family:"微软雅黑";
+	line-height:60px;
+	text-align:center;
+	border-bottom:1px solid #dbdbdb;
+}
+#reg .right .info .phone
+{
+	width:332px;
+	margin:0 auto;
+}
+#reg .right .info #reg-error{
+	color: #ff4200;
+	height: 40px;
+	line-height: 40px;
+	display: none;
+	width:332px;
+	margin:0 auto;
+	margin-top: -20px;
+}
+#reg .right .info .phone .value 
+{
+	width: 332px;
+    height: 48px;
+    line-height: 48px;
+    margin: 0 auto;
+    background-color: #f4fbff;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+}
+#reg .right .info .phone span
+{
+	display: block;
+    background:url(../img/user/user-sj.png) no-repeat;
+    width: 48px;
+    height: 48px;
+    float: left;
+    background-position: 50%;
+}
+#reg .right .info .phone input
+{
+	height: 46px;
+	line-height: 46px;
+    background-color: #f4fbff;
+    border: 0;
+    width: 280px;
+    color: #b0b3b4;
+}
+#reg .right .info .code
+{
+	width:332px;
+	margin:0 auto;
+}
+#reg .right .info .code img
+{
+	width: 88px;
+    height: 40px;
+    line-height:40px;
+    border-radius: 3px;
+    float:right;
+	margin-top: 18px;
+	cursor:pointer;
+	border: 1px solid #e5e5e5;
+}
+#reg .right .info .code img:hover
+{
+	border: 1px solid #ff8000;
+}
+#reg .right .info .code .value
+{
+	margin-top: 14px;
+    width: 228px;
+    height: 48px;
+    line-height: 48px;
+    background-color: #f4fbff;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+	float:left;
+
+}
+#reg .right .info .code .value span
+{
+	display: block;
+    background:url(../img/user/user-yz.png) no-repeat;
+    width: 48px;
+    height: 48px;
+    float: left;
+    background-position: 50%;
+}
+#reg .right .info .code input
+{
+	height: 46px;
+	line-height: 46px;
+    background-color: #f4fbff;
+    border: 0;
+    width: 172px;
+    color: #b0b3b4;
+	float:left;
+}
+#reg .right .info .code #Btn
+{
+    width: 90px;
+    height: 46px;
+	line-height:40px;
+    background-color: #ec701d;
+    color: #fff;
+    border: 1px solid #ec701d;
+    border-radius: 3px;
+    text-align: center;
+    float:right;
+	margin-top: 16px;
+	cursor:pointer;
+}
+#reg .right .info .code #Btn:hover
+{
+	background-color: #ff8000;
+}
+#reg .right .info .code #Btn:active
+{
+	background-color: #ff8000;
+}
+#reg .right .info .pwd {
+	width: 332px;
+    margin: 0 auto;
+    margin-top:14px;
+}
+#reg .right .info .pwd .value {
+	width: 332px;
+    height: 48px;
+    line-height: 48px;
+    background-color: #f4fbff;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+}
+#reg .right .info .pwd span
+{
+	display: block;
+    background:url(../img/user/user-mm.png) no-repeat;
+    width: 48px;
+    height: 48px;
+    float: left;
+    background-position: 50%;
+}
+#reg .right .info .pwd input
+{
+	height: 46px;
+	line-height: 46px;
+    background-color: #f4fbff;
+    border: 0;
+    width: 280px;
+    color: #b0b3b4;
+}
+#reg .right .info input{
+	font-size: 14px;
+}
+#reg .right .agree
+{
+	width: 332px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 auto;
+    margin-top: 20px;
+	font-family:"微软雅黑";
+}
+#reg .right .agree p {
+	float:left;
+}
+#reg .right .agree p em {
+	display:inline-block;
+	width:16px;
+	height:16px;
+	border:1px solid #d2d2d2;
+	background-color:#fff;
+	border-radius:5px;
+	vertical-align:middle;
+	cursor:pointer;
+}
+#reg .right .agree p em i {
+	line-height:16px;
+	color:#858585;
+	margin-left:2px;
+	display: block;
+	cursor:pointer;
+}
+#reg .right .agree p span {
+	vertical-align:middle;
+	cursor:pointer;
+}
+#reg .right .agree a {	
+	height: 45px;
+    line-height: 45px;
+	color: #117bd8;
+}
+#reg .right .agree .error{
+	color: #ff4200;
+	height: 40px;
+	font-size: 14px;
+	line-height: 40px;
+	display: block;
+	clear: both;
+	margin-top: -10px;
+}
+#reg .right .regLi
+{
+	width: 332px;
+    margin: 0 auto;
+	margin-top:6px;
+}
+#reg .right .regLi input
+{
+    line-height: 43px;
+    background-color: #01a2f2;
+    color: #fff;
+    border: 1px solid #01a2f2;
+    border-radius: 4px;
+    font-family: "微软雅黑";
+    font-size: 20px;
+	width: 100%;
+	text-align:center;
+	cursor:pointer;
+}
+#reg .right .regBtm
+{
+	width:148px;
+	margin:0 auto;
+	margin-top:16px;
+}
+#reg .right .regBtm span
+{
+	color:#787878;
+}
+#reg .right .regBtm a {
+	color: #117bd8;
+}
+.forget .right .regLi input{
+	margin-top: 30px;
+}

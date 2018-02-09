@@ -1,0 +1,185 @@
+﻿<html>
+<head>
+<link rel="stylesheet" type="text/css" href="static/style.css" />
+<script type="text/javascript" src="static/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="static/api-script.js"></script>
+<title>UZWORK API DOC</title>
+<script>
+$(function(){
+	var ht=$(window).height();
+	if(ht < 900) {
+		ht = 900;
+	}
+	else {
+		ht = $(window).height() - 75;
+	}
+	$("#nav").height(ht);
+	$("#main-iframe").height(ht);
+	$("#nav p").click(function(){
+		$("#main-iframe").hide();
+		$("#dict").show();
+	});
+	$("#nav dl dt").click(function(){
+		if($(this).children("em").hasClass("up")) {
+			var dlHeight = $(this).parent().height();
+			var navHeight = $("#nav").height();
+			if(navHeight - dlHeight > ht) {
+				$("#nav").height($("#nav").height() - dlHeight + 51);
+				$("#main-iframe").height($("#main-iframe").height() - dlHeight + 51);
+			}
+			else {
+				var diffHeight = navHeight - ht;
+				$("#nav").height($("#nav").height() - diffHeight);
+				$("#main-iframe").height($("#main-iframe").height() - diffHeight);
+			}
+			
+			$(this).parent().children("dd").hide(300);
+			$(this).children("em").removeClass("up").addClass("down");
+		}
+		else {
+			$(this).parent().children("dd").show(300);
+			$(this).children("em").removeClass("down").addClass("up");
+			var heightTotal = 0;
+			$("#nav dl").each(function(){
+				heightTotal = heightTotal + $(this).height();
+			})
+			if(heightTotal + 80 >  $("#nav").height()) {
+				$("#nav").height(heightTotal + 100);
+				$("#main-iframe").height(heightTotal + 100);
+			}
+		}
+	});
+	$("#nav dl dd").click(function(){
+		// remove sel firstly
+		$("#nav dd").removeClass("sel");
+		
+		var linkId = $(this).attr("class");
+		var catId = $(this).parent().attr("id");
+
+		$(this).addClass("sel");
+		
+		if(linkId != "index"){
+			$("#dict").hide();
+			$("#main-iframe").show().attr("src", catId+"/"+linkId+".html");
+		} 
+		else {
+			$("#main-iframe").hide();
+			$("#dict").show();
+		}
+	});
+})
+</script>
+</head>
+<body>
+<div id="head">
+	<p class="title"><a href="#"></a><span>UZWork Application Programming Interface</span></p>
+</div>
+<div class="w cfix">
+<div id="nav">
+	<p id="index">API 首页</p>
+	<dl id="global">
+		<dt>基础设置(Base)<em class="down"></em></dt>
+		<dd class="base">基础参数</dd>
+		<dd class="token">生成Token</dd>
+		<dd class="init">初始化</dd>
+	</dl>
+	<dl id="user">
+		<dt>用户(User)<em class="down"></em></dt>
+		<dd class="phone">手机号</dd>
+		<dd class="online">在线</dd>
+		<dd class="list">列表</dd>
+		<dd class="detail">详情</dd>
+		<dd class="login">登录</dd>
+		<dd class="register">注册</dd>
+		<dd class="forget">忘记密码</dd>
+	</dl>
+	<dl id="project">
+		<dt>项目(Project)<em class="down"></em></dt>
+		<dd class="list">列表</dd>
+		<dd class="detail">详情</dd>
+		<dd class="bid">投标</dd>
+		<dd class="collect">收藏</dd>
+	</dl>
+	<dl id="category">
+		<dt>分类(Category)<em class="down"></em></dt>
+		<dd class="list">列表</dd>
+	</dl>
+	<dl id="code">
+		<dt>验证码(Code)<em class="down"></em></dt>
+		<dd class="image">生成图片</dd>
+		<dd class="verifyImage">验证图片</dd>
+		<dd class="SMS">生成短信</dd>
+		<dd class="verifySMS">验证短信</dd>
+	</dl>
+	<dl id="workbench">
+		<dt>工作台(Workbench)<em class="down"></em></dt>
+		<dd class="project">项目列表</dd>
+		<dd class="message">消息</dd>
+	</dl>
+</div>
+<div id="main">
+	<iframe id="main-iframe" src="" style="display:none;"></iframe>
+	<div id="dict" class="cfix">
+		<div class="title">数据字典</div>
+		<table>
+			<thead>
+				<tr class="title"><th colspan="3">用户</th></tr>
+				<tr><th class="td30">属性</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>userId</td><td>int</td><td>用户ID</td></tr>
+				<tr><td>userIdStr</td><td>string</td><td>加密后的ID</td></tr>
+				<tr><td>userTypeId</td><td>int</td><td>用户类型ID</td></tr>
+				<tr><td>userType</td><td>UserType</td><td>用户类型</td></tr>
+				<tr><td>activeB</td><td>int</td><td>0/1：锁定/激活</td></tr>
+				<tr><td>username</td><td>string</td><td>用户名</td></tr>
+				<tr><td>cellPhone</td><td>string</td><td>手机号码</td></tr>
+				<tr><td>loginTime</td><td>string</td><td>最新登录时间</td></tr>
+				<tr><td>loginIp</td><td>string</td><td>最新登录IP</td></tr>
+				<tr><td>email</td><td>string</td><td>邮箱地址</td></tr>
+				<tr><td>idImage</td><td>string</td><td>用户图像路径</td></tr>
+				<tr><td>msgNumber</td><td>int</td><td>未读消息数目</td></tr>
+				<tr><td>statusId</td><td>int</td><td>状态ID</td></tr>
+				<tr><td>status</td><td>UserStatus</td><td>状态</td></tr>
+				<tr><td>reviewId</td><td>int</td><td>审核记录ID</td></tr>
+				<!-- <tr><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+		<table>
+			<thead>
+				<tr class="title"><th colspan="3">项目</th></tr>
+				<tr><th class="td30">属性</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>userId</td><td>boolean</td><td></td></tr>
+				<tr><td>username</td><td>string</td><td></td></tr>
+				<!-- <tr><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+		<table>
+			<thead>
+				<tr class="title"><th colspan="3">消息</th></tr>
+				<tr><th class="td30">属性</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>userId</td><td>boolean</td><td></td></tr>
+				<tr><td>username</td><td>string</td><td></td></tr>
+				<!-- <tr><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+		<table>
+			<thead>
+				<tr class="title"><th colspan="3">技术</th></tr>
+				<tr><th class="td30">属性</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>userId</td><td>boolean</td><td></td></tr>
+				<tr><td>username</td><td>string</td><td></td></tr>
+				<!-- <tr><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+	</div>
+</div>
+</div>
+</body>
+</html>
