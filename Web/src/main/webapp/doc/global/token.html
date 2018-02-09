@@ -1,0 +1,56 @@
+﻿<html>
+<head>
+<title>UZWORK Login</title>
+<link rel="stylesheet" type="text/css" href="../static/style.css" />
+<script type="text/javascript" src="../static/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../static/api-script.js"></script>
+</head>
+<body style="background-color: #fff;">
+<div class="inner">
+生成访问Token
+<hr size="1px">
+<table>
+	<tr><td class="label">接口地址：</td><td class="cont">{domain}/token</td></tr>
+	<tr><td class="label">请求方式：</td><td>GET</td></tr>
+	<tr><td class="label">接口描述：</td><td class="cont">在客户端开始访问之前，判断本地是否有token：<br>
+	1、无token，调用该接口获取访问token，并将新生成的token和当前IP地址保存到本地供后续使用。<br>
+	2、有token，判断当前IP和已经保存的IP是否一致，不一致则调用该接口生成新的token，并将新token和新IP地址保存到本地；IP没有变化，则不需要做任何事情。<i>（该逻辑只适用APP，不适用浏览器访问）</i>
+	</td></tr>
+	<tr><td class="label">请求参数：</td><td>
+		<table>
+			<thead>
+				<tr><th class="td30">参数名</th><th class="td10">必选</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td></tr>
+				<!-- <tr><td></td><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+	</td></tr>
+	<tr><td class="label">返回示例：</td><td>
+		<div class="json">
+{
+    "message": "",
+    "success": true,
+    "value": "9b6ebfb1fbb2af5b0467fb7ce101940f0ee0ef1f836ada1c223a8e0fbc67fa301c0906f432f77562"
+}
+		</div>
+	</td></tr>
+	<tr><td class="label">返回说明：</td><td>
+		<table>
+			<thead>
+				<tr><th class="td30">字段名</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>success</td><td>boolean</td><td>“true/false”代表“成功/失败”</td></tr>
+				<tr><td>message</td><td>String</td><td>返回消息</td></tr>
+				<tr><td>value</td><td>String</td><td>新生成的访问token</td></tr>
+				
+				<!-- <tr><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+	</td></tr>
+</table>
+</div>
+</body>
+</html>

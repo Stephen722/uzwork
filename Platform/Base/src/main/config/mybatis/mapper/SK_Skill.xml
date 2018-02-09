@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="SK_Skill">
+	
+    <!-- ***************************Selection************************** -->
+    <!-- Retrieve Skill Information                                     -->
+    <!-- ************************************************************** -->
+    <!-- Define the result map for Skill -->
+	<resultMap id="skillMap" type="Topic" >
+		<result property="skillId" column="skillId" />
+    	<result property="userId" column="userId" />
+    	<result property="content" column="content" />
+    	<result property="categoryId" column="categoryId" />
+    	<result property="imageB" column="imageB" />
+    	<result property="createdTime" column="createdTime" />
+    </resultMap>
+
+    <sql id="skillAllColumns">
+    	s.skillId, s.userId, s.content, s.categoryId, s.imageB, DATE_FORMAT(s.createdTime, "%Y-%m-%d %H:%i") createdTime
+    </sql>
+    
+    <select id="getSkillById" parameterType="int" resultMap="skillMap">
+		SELECT <include refid="skillAllColumns" />
+    	  FROM sk_skill t
+    	 WHERE s.skillId = #{skillId}
+    </select>
+
+    <!-- ***************************Insertion************************** -->
+    <!-- Insert Skill Information                                       -->
+    <!-- ************************************************************** -->	
+	<insert id="insertSkill" parameterType="Skill">
+		INSERT sk_skill(skillId, userId, content, categoryId, imageB, createdTime)
+	    VALUES (#{skillId},#{userId}, #{content}, #{categoryId}, #{imageB}, #{createdTime})
+	</insert>
+
+    <!-- ****************************Update**************************** -->
+    <!-- Update Skill Information                                       -->
+    <!-- ************************************************************** -->	
+	
+    <!-- ****************************Delete**************************** -->
+    <!-- Delete Skill Information                                       -->
+    <!-- ************************************************************** -->
+	<delete id="deleteSkill" parameterType="int">
+		DELETE FROM sk_skill
+		 WHERE skillId = #{skillId}
+	</delete>
+</mapper>

@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="UZ_Project">
+
+	<!--<cache eviction="LRU" flushInterval="18000000" size="6000" readOnly="true"/>-->
+
+    <!-- ***************************Selection************************** -->
+    <!-- Retrieve Project Information                                   -->
+    <!-- ************************************************************** -->
+    <!-- Define the result map for project, in order to get category/sub category -->
+	<resultMap id="projectMap" type="Project" >
+    	<result property="projectId" column="projectId" />
+    	<result property="userId" column="userId" />
+    	<result property="title" column="title" />
+    	<result property="description" column="description" />
+    	<result property="attachment" column="attachment" />
+    	<result property="skill" column="skill" />
+    	<result property="budgetId" column="budgetId" />
+    	<result property="durationId" column="durationId" />
+    	<result property="statusId" column="statusId" />
+    	<result property="reads" column="reads" />
+    	<result property="bids" column="bids" />
+    	<result property="favorites" column="favorites" />
+    	<result property="requireTeam" column="requireTeam" />
+    	<result property="createdTime" column="createdTime" />
+    	<result property="updatedTime" column="updatedTime" />
+    	<association property="category" javaType="Category" column="categoryId" select="UZ_Category.getCategoryById"/>
+    	<association property="subCategory" javaType="Category" column="subCategoryId" select="UZ_Category.getCategoryById"/>  
+    </resultMap>
+    
+    <resultMap id="projectOrderMap" type="Project" >
+    	<result property="projectId" column="projectId" />
+    	<result property="userId" column="userId" />
+    	<result property="title" column="title" />
+    	<result property="description" column="description" />
+    	<result property="attachment" column="attachment" />
+    	<result property="skill" column="skill" />
+    	<result property="budgetId" column="budgetId" />
+    	<result property="durationId" column="durationId" />
+    	<result property="statusId" column="statusId" />
+    	<result property="reads" column="reads" />
+    	<result property="bids" column="bids" />
+    	<result property="favorites" column="favorites" />
+    	<result property="requireTeam" column="requireTeam" />
+    	<result property="createdTime" column="createdTime" />
+    	<result property="updatedTime" column="updatedTime" />
+    	<association property="order" javaType="Order" column="projectId" select="UZ_Project.getOrderByProjectId"/>
+    	<association property="category" javaType="Category" column="categoryId" select="UZ_Category.getCategoryById"/>
+    	<association property="subCategory" javaType="Category" column="subCategoryId" select="UZ_Category.getCategoryById"/>  
+    </resultMap>
+    
+    <!-- SQL for basic/all attributes of project -->
+    <sql id="projectBasicColumns">
+    	p.projectId, p.categoryId, p.subCategoryId, p.userId, p.title, p.skill, p.budgetId, p.durationId, p.statusId, p.reads, p.bids, p.favorites, DATE_FORMAT(p.createdTime, "%Y-%m-%d %H:%i") createdTime
+    </sql>
+    
+    <sql id="projectAllColumns">
+    	p.projectId, p.categoryId, p.subCategoryId, p.userId, p.title, p.description, p.attachment, p.skill, p.budgetId, p.durationId, p.statusId, p.reads, p.bids, p.favorites, p.requireTeam,
+    	DATE_FORMAT(p.createdTime, "%Y-%m-%d %H:%i") createdTime, DATE_FORMAT(p.updatedTime, "%Y-%m-%d %H:%i:%s") updatedTime
+    </sql>
+    
+    <select id="getProjectBasicById" parameterType="int" resultMap="projectMap">
+		SELECT <include refid="projectBasicColumns" />
+    	  FROM uz_project p
+    	 WHERE p.projectId = #{projectId}
+    </select>
+    
+    <select id="getProjectById" parameterType="int" resultMap="projectMap">
+		SELECT <include refid="projectAllColumns" />
+    	  FROM uz_project p
+    	 WHERE p.projectId = #{projectId}
+    </select>
+    
+    <select id="getProjectByUser" parameterType="Map" resultMap="projectMap">
+		SELECT <include refid="projectBasicColumns" />
+		  FROM uz_project p
+    	 WHERE p.userId = #{userId}
+    	 ORDER BY p.projectId DESC
+ 		 LIMIT #{begin}, #{end}
+    </select>
+    
+    <select id="getProjectByUserTotal" parameterType="Map" resultType="int">
+		SELECT count(p.projectId)
+		  FROM uz_project p
+    	 WHERE p.userId = #{userId}
+    </select>
+    
+    <!-- get project status >= 5 -->
+    <select id="getProjectByCategory" parameterType="Map" resultMap="projectMap">
+		SELECT <include refid="projectBasicColumns" />
+		  FROM uz_project p
+		 WHERE p.statusId >=5
+    	 <if test="categoryId != null and categoryId > 0">
+    	 	AND p.categoryId = #{categoryId}
+    	 </if>
+    	 <if test="durationId != null and durationId > 0">
+    	 	AND p.durationId = #{durationId}
+    	 </if>
+    	 ORDER BY p.projectId DESC
+ 		 LIMIT #{begin}, #{end}
+    </select>
+    <select id="getProjectByCategoryTotal" parameterType="Map" resultType="int">
+		SELECT count(p.projectId)
+		  FROM uz_project p
+		 WHERE p.statusId >=5	
+    	 <if test="categoryId != null and categoryId > 0">
+    	 	AND p.categoryId = #{categoryId}
+    	 </if>
+    	 <if test="durationId != null and durationId > 0">
+    	 	AND p.durationId = #{durationId}
+    	 </if>
+    </select>
+        
+    <select id="getTopProjectByCategory" parameterType="Map" resultMap="projectMap">
+		SELECT <include refid="projectBasicColumns" />
+		  FROM uz_project p
+    	 WHERE p.categoryId = #{categoryId}
+    	   AND p.statusId >=5	
+    	 ORDER BY p.projectId DESC
+ 		 LIMIT #{pageSize}
+    </select>
+        
+    <select id="getOrderByProjectId" parameterType="int" resultType="Order">
+		<![CDATA[
+		SELECT po.orderId, po.projectId, po.hirerId, po.bidderId, po.bidId, po.price, po.startDate, po.endDate, po.agreed, po.comment,
+			   DATE_FORMAT(po.createdTime, "%Y-%m-%d %H:%i") createdTime,  DATE_FORMAT(po.updatedTime, "%Y-%m-%d %H:%i") updatedTime,
+			   u.username bidderName, u.idImage bidderImage
+    	  FROM uz_project_order po, uz_user u
+    	 WHERE po.projectId = #{projectId}
+    	   AND po.bidderId = u.userId
+    	   AND po.agreed < 2
+    	 ]]>
+    </select>
+    
+   <select id="favoriteProjectVerification" parameterType="Map" resultType="int">
+		SELECT pf.favoriteId 
+    	  FROM uz_project_favorite pf
+    	 WHERE pf.projectId = #{projectId}
+    	   AND pf.userId = #{userId}
+    </select>
+     
+    <select id="bidProjectVerification" parameterType="Map" resultType="int">
+		SELECT pb.id
+    	  FROM uz_project_bid pb
+    	 WHERE pb.projectId = #{projectId}
+    	   AND pb.bidderId = #{userId}
+    </select>
+         
+    <select id="getBidById" parameterType="Map" resultType="Bid">
+		SELECT pb.id, pb.bidderId userId, pb.projectId, pb.price, pb.proposal, 
+			   u.username, u.idImage, DATE_FORMAT(pb.createdTime, "%Y-%m-%d %H:%i") createdTime
+    	  FROM uz_project_bid pb, uz_user u
+    	 WHERE pb.id = #{bidId}
+    	   AND pb.projectId = #{projectId}
+    	   AND pb.bidderId = u.userId
+    </select>
+    
+    <select id="getAllBidsByProjectId" parameterType="Map" resultType="Bid">
+		SELECT pb.id, pb.projectId, pb.price, pb.proposal, DATE_FORMAT(pb.createdTime, "%Y-%m-%d %H:%i") createdTime,
+			   pb.bidderId userId, u.username, u.idImage 
+		  FROM uz_project_bid pb, uz_user u
+		 WHERE pb.projectId = #{projectId}
+		   AND pb.bidderId = u.userId
+    	 ORDER BY pb.id DESC
+ 		 LIMIT #{begin}, #{end}
+    </select>
+    <select id="getAllBidsByProjectIdTotal" parameterType="Map" resultType="int">
+		SELECT count(pb.id)
+		  FROM uz_project_bid pb
+		 WHERE pb.projectId = #{projectId}
+    </select>
+       
+    <!-- Begin: Retrieving all project by criteria, the parameter is sensitive -->
+    <sql id="FromWhereClauseForGetAllProject">
+		FROM uz_project p WHERE 1=1
+		<if test="userId != null and userId > 0">
+    	 		p.userId = #{userId}
+    	 	</if>
+		<if test="statusId != null and statusId !='' "> 
+		  	AND p.statusId = #{statusId}
+		</if>
+		<if test="searchStartDate != null  and searchStartDate != '' and searchEndDate != null and searchEndDate != '' ">
+	   	  	AND DATE_FORMAT(p.createdTime, "%Y-%m-%d") BETWEEN STR_TO_DATE(#{searchStartDate}, "%Y-%m-%d") AND STR_TO_DATE(#{searchEndDate}, "%Y-%m-%d")
+	  	</if>
+	  	<if test="keywords != null and keywords != '' "> 
+		  	AND p.title LIKE CONCAT('%',#{keywords},'%')
+		</if>
+    </sql>
+    
+    <select id="getAllProject" parameterType="Map" resultType="Project">
+		SELECT <include refid="projectBasicColumns" />
+		<include refid="FromWhereClauseForGetAllProject" />
+    	 ORDER BY p.projectId DESC
+ 		 LIMIT #{begin}, #{end}
+    </select>
+    
+    <select id="getAllProjectTotal" parameterType="Map" resultType="int">
+		SELECT count(p.projectId)
+		  <include refid="FromWhereClauseForGetAllProject" />
+    </select>
+    <!-- End: Retrieving all project by criteria, the parameter is sensitive -->
+    
+    <!-- Begin: Retrieving projects by user profile: WIP\DONE\POST\BID\FAVORITE -->
+    <select id="getProjectByUserProfileWIP" parameterType="Map" resultMap="projectOrderMap">
+		SELECT <include refid="projectBasicColumns" />
+		  FROM uz_project p
+		 WHERE p.userId = #{userId}
+		   AND p.statusId >= 5
+		 UNION
+		SELECT p2.projectId, p2.categoryId, p2.subCategoryId, p2.userId, p2.title, p2.skill, p2.budgetId, p2.durationId, p2.statusId, p2.reads, p2.bids, p2.favorites, DATE_FORMAT(p2.createdTime, "%Y-%m-%d %H:%i") createdTime
+		  FROM uz_project p2, uz_project_order po
+		 WHERE po.bidderId = #{userId}
+		   AND po.projectId = p2.projectId
+    </select>
+    
+    <sql id="FromWhereClauseForGetProjectByUserProfilePOST">
+    	FROM uz_project p
+       WHERE p.userId = #{userId}
+    </sql>
+    <select id="getProjectByUserProfilePOST" parameterType="Map" resultMap="projectMap">
+		SELECT <include refid="projectAllColumns" />
+		<include refid="FromWhereClauseForGetProjectByUserProfilePOST" />
+    	 ORDER BY p.projectId DESC
+ 		 LIMIT #{begin}, #{end}
+    </select>
+    <select id="getProjectByUserProfileTotalPOST" parameterType="Map" resultType="int">
+		SELECT count(p.projectId)
+		  <include refid="FromWhereClauseForGetProjectByUserProfilePOST" />
+    </select>
+    
+    <sql id="FromWhereClauseForGetProjectByUserProfileBID">
+    	FROM uz_project p, uz_project_bid pb
+       WHERE pb.bidderId = #{userId}
+         AND pb.projectId = p.projectId
+    </sql>
+    <select id="getProjectByUserProfileBID" parameterType="Map" resultMap="projectMap">
+		SELECT <include refid="projectAllColumns" />
+		<include refid="FromWhereClauseForGetProjectByUserProfileBID" />
+    	 ORDER BY pb.id DESC <!-- MUST ORDER BY PD.ID, KEEP IT SAME AS getBidInfoByUserProfileBID  -->
+ 		 LIMIT #{begin}, #{end}
+    </select>
+    <select id="getProjectByUserProfileTotalBID" parameterType="Map" resultType="int">
+		SELECT count(p.projectId)
+		  <include refid="FromWhereClauseForGetProjectByUserProfileBID" />
+    </select>
+    <select id="getBidInfoByUserProfile" parameterType="Map" resultType="Map">
+		SELECT pb.id, pb.bidderId, pb.projectId, pb.price, pb.proposal, DATE_FORMAT(pb.createdTime, "%Y-%m-%d %H:%i") createdTime
+		  FROM uz_project_bid pb
+		 WHERE pb.bidderId = #{userId}
+		 ORDER BY pb.id DESC <!-- MUST ORDER BY PD.ID, KEEP IT SAME AS getProjectByUserProfileBID  -->
+ 		 LIMIT #{begin}, #{end}
+    </select>
+    
+    <sql id="FromWhereClauseForGetProjectByUserProfileFAV">
+    	FROM uz_project p, uz_project_favorite pf
+       WHERE pf.userId = #{userId}
+         AND pf.projectId = p.projectId
+    </sql>
+    <select id="getProjectByUserProfileFAV" parameterType="Map" resultMap="projectMap">
+		SELECT <include refid="projectAllColumns" />
+		<include refid="FromWhereClauseForGetProjectByUserProfileFAV" />
+    	 ORDER BY p.projectId DESC
+ 		 LIMIT #{begin}, #{end}
+    </select>
+    <select id="getProjectByUserProfileTotalFAV" parameterType="Map" resultType="int">
+		SELECT count(p.projectId)
+		  <include refid="FromWhereClauseForGetProjectByUserProfileFAV" />
+    </select>    
+    <!-- End: Retrieving projects by user profile: WIP\DONE\POST\BID\FAVORITE -->
+
+	<sql id="FromWhereClauseForGetProjectReviewHistory">
+    	FROM uz_project_review_history rh, uz_project p, uz_admin a
+       WHERE rh.adminId = a.adminId
+         AND rh.projectId = p.projectId
+    	<if test="keywords != null and keywords != '' "> 
+			AND p.title LIKE CONCAT('%',#{keywords},'%')
+		</if>
+		<if test="projectId != null and projectId != '' "> 
+			AND rh.projectId = #{projectId}
+		</if>
+		<if test="searchStartDate != null and searchStartDate != ''">
+    	 	AND rh.createdTime >= #{searchStartDate}
+    	</if>
+    	<if test="searchEndDate != null and searchEndDate != ''">
+    	 	<![CDATA[
+    	 	AND rh.createdTime <= #{searchEndDate}
+    	 	]]>
+    	</if>
+    </sql>
+    <select id="getProjectReviewHistoryTotal" parameterType="Map" resultType="int">
+		SELECT count(rh.id)
+		<include refid="FromWhereClauseForGetProjectReviewHistory" />
+    </select>
+    <select id="getProjectReviewHistory" parameterType="Map" resultType="Map">
+		SELECT rh.id, rh.comment, rh.reason, DATE_FORMAT(rh.createdTime, "%Y-%m-%d %H:%i") createdTime,
+			   a.username adminUsername, rh.projectId, p.title, 
+			   (SELECT ps.name FROM uz_project_status ps WHERE ps.id = rh.fromStatus) fromStatus,
+			   (SELECT ps2.name FROM uz_project_status ps2 WHERE ps2.id = rh.toStatus) toStatus
+		<include refid="FromWhereClauseForGetProjectReviewHistory" />
+    	 ORDER BY rh.id DESC
+    	 LIMIT #{begin},#{end}
+    </select>
+        
+    <!-- ***************************Insertion************************** -->
+    <!-- Insert Project Information                                     -->
+    <!-- ************************************************************** -->	
+	<insert id="insertProject" parameterType="Map" useGeneratedKeys="true" keyProperty="projectId">
+		INSERT uz_project(categoryId, subCategoryId, userId, title, description, attachment, skill, budgetId, durationId, requireTeam, statusId, createdTime)
+	    VALUES (#{categoryId}, #{subCategoryId}, #{userId}, #{title}, #{description}, #{attachment}, #{skill}, #{budgetId}, #{durationId}, #{requireTeam}, #{statusId}, now())
+	</insert>
+	 
+	<insert id="insertFavoriteProject" parameterType="Map" useGeneratedKeys="true" keyProperty="favoriteId">
+		INSERT uz_project_favorite(userId, projectId, createdTime)
+	    VALUES (#{userId}, #{projectId}, now())
+	</insert>
+	
+	<insert id="bidProject" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+		INSERT uz_project_bid(bidderId, projectId, price, proposal, createdTime)
+	    VALUES (#{userId}, #{projectId}, #{price}, #{proposal}, now())
+	</insert>
+	
+	<insert id="insertProjectOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="orderId">
+		INSERT uz_project_order(projectId, bidderId, hirerId, bidId, price, startDate, endDate, comment, agreed, createdTime)
+	    VALUES (#{projectId}, #{bidderId}, #{hirerId}, #{bidId}, #{price}, #{startDate}, #{endDate}, #{comment}, 0, now())
+	</insert>
+		
+	<insert id="insertProjectReviewHistory" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+		INSERT uz_project_review_history(adminId, projectId, fromStatus, toStatus, comment, reason, createdTime)
+	    VALUES (#{adminId}, #{projectId}, #{fromStatus}, #{toStatus}, #{comment}, #{reason}, now())
+	</insert>
+    <!-- ****************************Update**************************** -->
+    <!-- Update Project Information                                     -->
+    <!-- ************************************************************** -->	
+	<update id="updateProject" parameterType="Project">
+		UPDATE uz_project
+		   SET projectId = #{projectId}
+		 <if test="title != null">
+    	 	 , title = #{title}
+    	 </if>
+    	 <if test="description != null">
+    	 	 , description = #{description}
+    	 </if>
+    	 <if test="attachment != null">
+    	 	 , attachment = #{attachment}
+    	 </if>
+    	 <if test="skill != null">
+    	 	 , skill = #{skill}
+    	 </if>
+    	 <if test="budgetId != null">
+    	 	 , budgetId = #{budgetId}
+    	 </if>	
+    	 <if test="durationId != null">
+    	 	 , durationId = #{durationId}
+    	 </if>
+    	 <if test="requireTeam != null">
+    	 	 , requireTeam = #{requireTeam}
+    	 </if>
+		 WHERE projectId = #{projectId}
+	</update>
+		
+	<update id="updateProjectStatus" parameterType="Map">
+		UPDATE uz_project
+		   SET statusId = #{statusId}
+		 WHERE projectId = #{projectId}
+	</update>
+	
+	<update id="agreeProjectOrder" parameterType="Map">
+		UPDATE uz_project_order po
+		   SET po.agreed = 1
+		 WHERE po.orderId = #{orderId}
+		   AND po.bidderId = #{bidderId}
+		   AND po.agreed = 0
+	</update>
+	
+	<update id="updateProjectOrder" parameterType="Order">
+		UPDATE uz_project_order po
+		   SET po.price = #{price},
+		   	   startDate = #{startDate},
+		   	   endDate = #{endDate},
+		   	   comment = #{comment},
+		   	   updatedTime = now()
+		 WHERE po.orderId = #{orderId}
+		   AND po.projectId = #{projectId}
+		   AND po.agreed = 0
+	</update>
+
+	<!-- DON'T FLUSH CACHE -->
+	<update id="updateProjectReads" parameterType="int" flushCache="false">
+		UPDATE uz_project p
+		   SET p.reads = p.reads + 1
+		 WHERE p.projectId = #{projectId}
+	</update>
+			
+    <!-- ****************************Delete**************************** -->
+    <!-- Delete Project Information                                     -->
+    <!-- ************************************************************** -->
+	<delete id="deleteProject" parameterType="Map">
+		DELETE FROM uz_project
+		 WHERE projectId = #{projectId}
+		   AND userId = #{userId}
+	</delete>
+	
+	<delete id="deleteFavoriteProject" parameterType="Map">
+		DELETE FROM uz_project_favorite
+		 WHERE projectId = #{projectId}
+		   AND userId = #{userId}
+	</delete> 
+	
+	<delete id="deleteProjectOrder" parameterType="int">
+		DELETE FROM uz_project_order
+		 WHERE projectId = #{projectId}
+	</delete> 
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="UZ_Category">
+	
+	<cache eviction="LRU" flushInterval="18000000" size="500" readOnly="true"/>
+
+    <!-- ***************************Selection************************** -->
+    <!-- Retrieve Information                                           -->
+    <!-- ************************************************************** -->
+    
+    <sql id="categoryColumns">
+    	c.id, c.name, c.code, c.sort, c.parentId, c.jobs
+    </sql>
+        
+    <select id="getCategoryById" parameterType="int" resultType="Category">
+		SELECT <include refid="categoryColumns" />
+    	  FROM uz_category c
+    	 WHERE c.id = #{id}
+    </select>
+    
+    <select id="getCategoryByCode" parameterType="String" resultType="Category">
+		SELECT <include refid="categoryColumns" />
+    	  FROM uz_category c
+    	 WHERE c.code = #{categoryCode}
+    </select>
+    
+    <!-- Begin: Retrieving all categories without pagination -->
+    <select id="getSubCategoryByParentId" parameterType="int" resultType="Category">
+		SELECT <include refid="categoryColumns" />
+    	  FROM uz_category c
+    	 WHERE c.parentId = #{parentId}
+    	 ORDER BY c.sort ASC
+    </select>
+    <select id="getSubCategoryByParentCode" parameterType="String" resultType="Category">
+		SELECT <include refid="categoryColumns" />
+    	  FROM uz_category c
+    	 WHERE c.parentId = (SELECT id FROM uz_category cat WHERE cat.code = #{parentCode})
+    	 ORDER BY c.sort ASC
+    </select>
+    <!-- End: Retrieving -->
+    
+     <select id="getCategoryByUserId" parameterType="int" resultType="Category">
+		SELECT <include refid="categoryColumns" />
+    	  FROM uz_user_category uc, uz_category c
+    	 WHERE uc.categorySubId = c.id
+    	   AND uc.userId = #{userId}
+    </select>
+     
+    <select id="getReviewCategoryByReviewId" parameterType="int" resultType="Category">
+		SELECT <include refid="categoryColumns" />
+    	  FROM uz_user_review_category uc, uz_category c
+    	 WHERE uc.categorySubId = c.id
+    	   AND uc.reviewId = #{reviewId}
+    	  ORDER BY c.id ASC
+    </select>
+    
+    <!-- ***************************Insertion************************** -->
+    <!-- Insert Information                                             -->
+    <!-- ************************************************************** -->	
+	<insert id="insertCategory" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
+		INSERT uz_category(name, code, sort, parentId, jobs)
+	    VALUES (#{name}, #{code}, #{sort}, #{parentId}, #{jobs})
+	</insert>
+	 		
+	<insert id="insertReviewUserCategory" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+		INSERT uz_user_review_category(reviewId, userId, categoryId, categorySubId, createdTime)
+	    VALUES (#{reviewId}, #{userId}, #{categoryId}, #{categorySubId}, now())
+	</insert>
+	
+    <!-- ****************************Update**************************** -->
+    <!-- Update Information                                             -->
+    <!-- ************************************************************** -->	
+	<update id="updateCategory" parameterType="Category">
+		UPDATE uz_category
+		   SET name = #{name}, code = #{code}, sort = #{sort}, parentId = #{parentId}, jobs = #{jobs}
+		 WHERE id = #{id}
+	</update>
+		
+    <!-- ****************************Delete**************************** -->
+    <!-- Delete Information                                             -->
+    <!-- ************************************************************** -->
+	<delete id="deleteCategory" parameterType="int">
+		DELETE FROM uz_category
+		 WHERE id = #{categoryId}
+	</delete>
+		
+	<!-- After insert new  user category, system will delete the old category -->
+	<delete id="deleteReviewUserCategory" parameterType="Map">
+		DELETE FROM uz_user_review_category
+		 WHERE userId = #{userId}
+		   AND reviewId = #{reviewId}
+	</delete>
+ 
+</mapper>

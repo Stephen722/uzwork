@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="SK_User">
+	
+    <!-- ***************************Selection************************** -->
+    <!-- Retrieve User Information                                      -->
+    <!-- ************************************************************** -->
+     <!-- Define the result map for user, in order to get category and skill list -->
+	<resultMap id="userMap" type="User" >
+    	<result property="userId" column="userId" />
+    	<result property="nickname" column="nickname" />
+    	<result property="username" column="username" />
+    	<result property="password" column="password" />
+    	<result property="phone" column="phone" />
+    	<result property="createdTime" column="createdTime" />
+    	<result property="loginTime" column="loginTime" />
+    	<result property="createdIp" column="createdIp" />
+    	<result property="loginIp" column="loginIp" />
+    	<result property="logins" column="logins" />
+    	<result property="picture" column="picture" />
+    	<result property="sex" column="sex" />
+    	<result property="activeB" column="activeB" />
+    	<result property="brief" column="brief" />
+    	<result property="city" column="city" />
+    	<result property="messages" column="messages" />
+    	<result property="friends" column="friends" />
+    	<result property="favorites" column="favorites" />
+    </resultMap>
+
+    <sql id="userAllColumns">
+    	u.userId, u.nickname, u.username, u.phone, u.password, u.sex, u.picture, u.brief, u.activeB, u.logins, u.loginIp, 
+    	DATE_FORMAT(u.loginTime, "%Y-%m-%d %H:%i") loginTime, DATE_FORMAT(u.createdTime, "%Y-%m-%d %H:%i") createdTime, u.createdIp, 
+    	u.messages, u.friends, u.favorites, (SELECT c.name FROM sk_address_city c WHERE c.id = u.city) city
+    </sql>
+    
+    <select id="getUserById" parameterType="int" resultMap="userMap">
+		SELECT <include refid="userAllColumns" />
+    	  FROM sk_user u
+    	 WHERE u.userId = #{userId}
+    </select>
+        
+    <select id="getUserByPhone" parameterType="String" resultMap="userMap">
+		SELECT <include refid="userAllColumns" />
+		  FROM sk_user u
+    	 WHERE u.phone=#{cellPhone}
+    </select>
+     
+<!--     <select id="getUserByEmail" parameterType="String" resultType="User">
+		SELECT <include refid="userAllColumns" />
+		  FROM sk_user u
+    	 WHERE u.email = #{email}
+    </select>
+       
+    Begin: Retrieving all user by criteria, the parameter is sensitive
+    
+    <sql id="FromWhereClauseForGetAllUser">
+		FROM sk_user u 
+	   WHERE 1=1
+		<if test="statusId != null and statusId != ''"> 
+			AND u.statusId = #{statusId}
+		</if>
+		<if test="activeB != null and activeB != ''"> 
+			AND u.activeB = #{activeB}
+		</if>
+	  	<if test="keywords != null and keywords != '' "> 
+			AND (u.username LIKE CONCAT('%',#{keywords},'%') OR u.cellPhone LIKE CONCAT('%',#{keywords},'%'))
+		</if>
+    </sql>
+    <select id="getAllUserTotal" parameterType="Map" resultType="int">
+		SELECT count(u.userId)
+    	<include refid="FromWhereClauseForGetAllUser" />
+    </select>
+    
+    <select id="getAllUser" parameterType="Map" resultType="User">
+		SELECT <include refid="userAllColumns" />
+    	 		   <include refid="FromWhereClauseForGetAllUser" />
+    	 	 ORDER BY u.userId ASC
+    	 	 LIMIT #{begin},#{end}
+    </select>
+    
+    <sql id="FromWhereClauseForGetAllReviewUser">
+		FROM sk_user_review ru
+	   WHERE ru.statusId = 1 
+		  OR ru.statusId = 3
+	  	<if test="keywords != null and keywords != '' "> 
+			AND ru.username LIKE CONCAT('%',#{keywords},'%')
+		</if>
+    </sql>
+    <select id="getAllReviewUserTotal" parameterType="Map" resultType="int">
+		SELECT count(ru.userId)
+    	<include refid="FromWhereClauseForGetAllReviewUser" />
+    </select>
+    <select id="getAllReviewUser" parameterType="Map" resultMap="reviewUserMap" >
+		SELECT <include refid="userReviewColumns" />
+    	 		   <include refid="FromWhereClauseForGetAllReviewUser" />
+    	 	 ORDER BY ru.reviewId ASC
+    	 	 LIMIT #{begin},#{end}
+    </select>   
+    End: Retrieving -->
+    
+    <select id="loginUser" parameterType="String" resultType="User">
+		SELECT <include refid="userAllColumns" />
+    	  FROM sk_user u
+    	 WHERE u.phone = #{phone} 
+    </select>
+    
+    <select id="loginUserUpdateFunction" statementType="CALLABLE" parameterType="Map" useCache="false"> 
+		 <![CDATA[
+		 {#{msgNumber, mode=OUT, jdbcType=INTEGER} = call func_login_update(#{userId}, #{loginIp})}
+		 ]]>
+	</select>
+
+    <!-- ***************************Insertion************************** -->
+    <!-- Insert User Information                                        -->
+    <!-- ************************************************************** -->	
+	<insert id="insertUser" parameterType="User">
+		INSERT sk_user(userId, phone, nickname, createdTime, createdIp, loginTime, loginIp)
+	    VALUES (#{userId}, #{phone}, #{nickname}, #{createdTime}, #{createdIp}, #{loginTime}, #{loginIp})
+	</insert>
+
+    <!-- ****************************Update**************************** -->
+    <!-- Update User Information                                        -->
+    <!-- ************************************************************** -->	
+	<update id="updateUser" parameterType="Map">
+		UPDATE sk_user
+		   SET userId = #{userId}
+		 <if test="username != null and username != ''">
+    	 	 , username = #{username}
+    	 </if>
+    	 <if test="nickname != null and nickname !=''">
+    	 	 , nickname = #{nickname}
+    	 </if>
+    	 <if test="city != null and city != ''">
+    	 	 , city = #{city}
+    	 </if>
+    	 <if test="sex != null and sex != ''">
+    	 	 , sex = #{sex}
+    	 </if>
+    	 <if test="brief != null and brief !=''">
+    	 	 , brief = #{brief}
+    	 </if>
+    	 <if test="picture != null and picture != ''">
+    	 	 , picture = #{picture}
+    	 </if>
+		 WHERE userId = #{userId}
+	</update>
+	
+	<update id="activateUser" parameterType="Map">
+		UPDATE sk_user
+		   SET activeB = #{activeB}
+		 WHERE userId = #{userId}
+	</update>
+    <!-- ****************************Delete**************************** -->
+    <!-- Delete User Information                                        -->
+    <!-- ************************************************************** -->
+	<delete id="deleteUser" parameterType="int">
+		DELETE FROM sk_user
+		 WHERE userId = #{userId}
+	</delete>
+</mapper>

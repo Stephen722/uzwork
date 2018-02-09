@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+
+	<package name="admin-default" namespace="/uz-mobile" extends="struts-default" strict-method-invocation="false">
+		
+   	 	<interceptors>
+			<interceptor name="MobileServiceInterceptor" class="com.uzwork.mobile.interceptor.MobileServiceInterceptor"/>
+			<interceptor-stack name="MobileServiceStack"> 
+                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="MobileServiceInterceptor"/>
+            </interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="MobileServiceStack" />
+		
+		<global-results>
+			<result name="forbidden" type="redirect">forbidden</result>
+		</global-results>
+		
+		<action name="forbidden" class="com.uzwork.mobile.action.ErrorAction" method="forbidden"/>
+		
+		<action name="token" class="com.uzwork.mobile.token.AccessTokenAction" />
+		
+		<action name="project" class="com.uzwork.mobile.project.ProjectAction" />
+		
+		<action name="category" class="com.uzwork.mobile.category.CategoryAction" />
+		
+		<action name="user" class="com.uzwork.mobile.user.UserAction" />
+
+	</package>
+</struts>

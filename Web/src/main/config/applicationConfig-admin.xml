@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+    <!-- ************************************************************** -->
+    <!-- Import the configurations of base                              -->
+    <!-- ************************************************************** -->
+    <import resource="classpath:config/applicationConfig-base.xml"/> 
+    
+    <bean id="AdminBaseAction" class="com.uzskill.admin.action.AdminBaseAction" parent="BaseAction" abstract="true" />
+    
+    <!-- ************************************************************** -->
+    <!-- Define Admin Center Manager and Action                         -->
+    <!-- ************************************************************** -->    
+   	<bean id="AdminUserManager" class="com.uzskill.admin.user.impl.AdminUserManagerImpl" parent="BaseManager">
+    </bean>
+    
+    <bean id="com.uzskill.admin.login.AdminLoginAction" class="com.uzskill.admin.login.AdminLoginAction" parent="AdminBaseAction" scope="prototype">
+		<property name="adminUserManager" ref="AdminUserManager" />
+    </bean>
+    
+    <bean id="com.uzskill.admin.action.AdminMainAction" class="com.uzskill.admin.action.AdminMainAction" parent="AdminBaseAction" scope="prototype">
+    </bean>
+    
+    <bean id="com.uzskill.admin.user.UserManagementAction" class="com.uzskill.admin.user.UserManagementAction" parent="AdminBaseAction" scope="prototype">
+		<property name="userManager" ref="UserManager" />
+		<property name="adminUserManager" ref="AdminUserManager" />
+		<property name="messageManager" ref="MessageManager" />
+    </bean>
+  
+    <bean id="com.uzskill.admin.message.MessageManagementAction" class="com.uzskill.admin.message.MessageManagementAction" parent="AdminBaseAction" scope="prototype">
+		<property name="userManager" ref="UserManager" />
+		<property name="messageManager" ref="MessageManager" />
+    </bean>
+    
+    <bean id="com.uzskill.admin.feedback.FeedbackManagementAction" class="com.uzskill.admin.feedback.FeedbackManagementAction" parent="AdminBaseAction" scope="prototype">
+		<property name="userManager" ref="UserManager" />
+		<property name="siteManager" ref="SiteManager" />
+    </bean>
+    
+    <bean id="com.uzskill.admin.user.AdminUserManagementAction" class="com.uzskill.admin.user.AdminUserManagementAction" parent="AdminBaseAction" scope="prototype">
+		<property name="adminUserManager" ref="AdminUserManager" />
+    </bean>
+    
+</beans>

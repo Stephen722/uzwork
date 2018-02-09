@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
+  "http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+<!-- Always ensure to use the correct XML header as above! -->
+<configuration>
+
+	<!-- ************************************************************** -->
+    <!-- Database connection property                                   -->
+    <!-- ************************************************************** -->
+	<properties resource="config/db.properties" />
+	
+	<!-- ************************************************************** -->
+    <!-- Mybatis Setting                                                -->
+    <!-- ************************************************************** -->
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<!--setting name="enhancementEnabled" value="true" />-->
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="defaultStatementTimeout" value="50000" />
+		<setting name="logImpl" value="LOG4J"/>
+	</settings>
+	
+	<!-- ************************************************************** -->
+    <!-- Type Aliases                                                   -->
+    <!-- ************************************************************** -->	
+	<typeAliases>
+		<typeAlias alias="User" type="com.aoding.base.user.impl.UserImpl"/>
+		
+	</typeAliases>
+	<!-- ************************************************************** -->
+    <!-- Mybatis Environments                                           -->
+    <!-- ************************************************************** -->	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="${dbDriver}"/>
+				<property name="url" value="${dbUrl}"/>
+				<property name="username" value="${dbUsername}"/>
+				<property name="password" value="${dbPassword}"/>
+				<property name="poolMaximumActiveConnections" value="200"/>
+				<property name="poolMaximumIdleConnections" value="20"/>
+				<property name="poolTimeToWait" value="30000"/>
+				<property name="poolPingQuery" value="select productId from ad_product limit 1"/>
+				<property name="poolPingEnabled" value="true"/>
+				<property name="poolPingConnectionsNotUsedFor" value="0"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- ************************************************************** -->
+    <!-- Mappers                                                        -->
+    <!-- ************************************************************** -->
+	<mappers>
+		<!-- Base Mapper -->
+
+		<!-- Mobile/App Mapper -->
+		<mapper resource="config/mybatis/mapper/AD_APP_Config.xml" />
+	</mappers>
+	
+</configuration>

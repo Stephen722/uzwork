@@ -1,0 +1,57 @@
+﻿<html>
+<head>
+<title>UZWORK Login</title>
+<link rel="stylesheet" type="text/css" href="../static/style.css" />
+<script type="text/javascript" src="../static/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../static/api-script.js"></script>
+</head>
+<body style="background-color: #fff;">
+<div class="inner">
+用户详情
+<hr size="1px">
+<table>
+	<tr><td class="label">接口地址：</td><td class="cont">{domain}/user/get</td></tr>
+	<tr><td class="label">请求方式：</td><td>GET</td></tr>
+	<tr><td class="label">接口描述：</td><td class="cont">获取用户所有信息</td></tr>
+	<tr><td class="label">请求参数：</td><td>
+		<table>
+			<thead>
+				<tr><th class="td30">参数名</th><th class="td10">必选</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>userId</td><td>Yes</td><td>String</td><td>加密的用户ID</td></tr>
+				<!-- <tr><td></td><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+	</td></tr>
+	<tr><td class="label">返回示例：</td><td>
+		<div class="json">
+{
+	"error_code": 0,
+	"data": {
+		  "uid": "1",
+		  "username": "12154545",
+		  "name": "吴系挂",
+		  "groupid": 2 ,
+		  "reg_time": "1436864169",
+		  "last_login_time": "0",
+	}
+}
+		</div>
+	</td></tr>
+	<tr><td class="label">返回说明：</td><td>
+		<table>
+			<thead>
+				<tr><th class="td30">字段名</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>success</td><td>boolean</td><td>“true/false”代表获取用户信息“成功/失败”</td></tr>
+				<tr><td>message</td><td>String</td><td>返回消息</td></tr>
+				<!-- <tr><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+	</td></tr>
+</table>
+</div>
+</body>
+</html>

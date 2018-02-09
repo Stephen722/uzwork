@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="SK_Topic">
+	
+    <!-- ***************************Selection************************** -->
+    <!-- Retrieve Topic Information                                     -->
+    <!-- ************************************************************** -->
+    <!-- Define the result map for Topic -->
+	<resultMap id="topicMap" type="Topic" >
+		<result property="topicId" column="topicId" />
+    	<result property="userId" column="userId" />
+    	<result property="content" column="content" />
+    	<result property="imageB" column="imageB" />
+    	<result property="createdTime" column="createdTime" />
+    </resultMap>
+
+    <sql id="topicAllColumns">
+    	t.topicId, t.userId, t.content, t.imageB, DATE_FORMAT(t.createdTime, "%Y-%m-%d %H:%i") createdTime
+    </sql>
+    
+    <select id="getTopicById" parameterType="int" resultMap="topicMap">
+		SELECT <include refid="topicAllColumns" />
+    	  FROM sk_topic t
+    	 WHERE t.topicId = #{topicId}
+    </select>
+
+    <!-- ***************************Insertion************************** -->
+    <!-- Insert Topic Information                                       -->
+    <!-- ************************************************************** -->	
+	<insert id="insertTopic" parameterType="Topic">
+		INSERT sk_topic(topicId, userId, content, imageB, createdTime)
+	    VALUES (#{topicId},#{userId}, #{content}, #{imageB}, #{createdTime})
+	</insert>
+
+    <!-- ****************************Update**************************** -->
+    <!-- Update Topic Information                                       -->
+    <!-- ************************************************************** -->	
+	
+    <!-- ****************************Delete**************************** -->
+    <!-- Delete Topic Information                                       -->
+    <!-- ************************************************************** -->
+	<delete id="deleteTopic" parameterType="int">
+		DELETE FROM sk_topic t WHERE t.topicId = #{topicId}
+	</delete>
+</mapper>

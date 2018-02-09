@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="UZ_Skill">
+    <!-- ***************************Selection************************** -->
+    <!-- Retrieve Information                                           -->
+    <!-- ************************************************************** -->
+    
+    <sql id="skillColumns">
+    	s.id, s.name, s.code, s.top
+    </sql>
+        
+    <select id="getSkillById" parameterType="int" resultType="Skill">
+		SELECT <include refid="skillColumns" />
+    	  FROM uz_skill s
+    	 WHERE s.id = #{id}
+    </select>
+    
+    <select id="getSkillByName" parameterType="String" resultType="Skill">
+		SELECT <include refid="skillColumns" />
+    	  FROM uz_skill s
+    	 WHERE s.name = #{name}
+    </select>
+    
+    <select id="getSkillByCode" parameterType="String" resultType="Skill">
+		SELECT <include refid="skillColumns" />
+    	  FROM uz_skill s
+    	 WHERE s.code = #{skillCode}
+    </select>
+        
+    <select id="getSkillByUserId" parameterType="int" resultType="Skill">
+		SELECT <include refid="skillColumns" />
+    	  FROM uz_user_skill us,uz_skill s
+    	 WHERE us.skillId = s.id
+    	   AND us.userId = #{userId}
+    	 UNION
+		SELECT 0 id, us.`name` name, '' code, 0 top
+		  FROM uz_user_skill us
+ 		 WHERE us.userId = #{userId}
+ 		   AND us.skillId = 0
+ 		<![CDATA[   AND us.name <> "" ]]>
+    </select>
+    
+    <select id="searchSkillByName" parameterType="String" resultType="Skill">
+		SELECT <include refid="skillColumns" />
+    	  FROM uz_skill s
+    	 WHERE s.name like CONCAT('%',#{skill},'%' )  
+    	 ORDER BY s.id ASC
+    </select>
+    
+    <select id="getReviewSkillByUserId" parameterType="int" resultType="Skill">
+		SELECT <include refid="skillColumns" />
+    	  FROM uz_user_review_skill us, uz_skill s
+    	 WHERE us.skillId = s.id
+    	   AND us.reviewId = #{reviewId}
+    	 UNION
+		SELECT 0 id, us.`name` name, '' code, 0 top
+		  FROM uz_user_review_skill us
+ 		 WHERE us.reviewId = #{reviewId}
+ 		   AND us.skillId = 0
+ 		<![CDATA[   AND us.name <> "" ]]>
+    </select>
+ 
+    <!-- ***************************Insertion************************** -->
+    <!-- Insert Information                                             -->
+    <!-- ************************************************************** -->	
+	<insert id="insertSkill" parameterType="Skill" useGeneratedKeys="true" keyProperty="id">
+		INSERT uz_skill(name, code, top)
+	    VALUES (#{name}, #{code}, #{top})
+	</insert>
+	
+	<insert id="insertReviewUserSkill" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+		INSERT uz_user_review_skill(reviewId, userId, skillId, name, createdTime)
+	    VALUES (#{reviewId}, #{userId}, #{skillId}, #{name}, now())
+	</insert>
+	 
+    <!-- ****************************Update**************************** -->
+    <!-- Update Information                                             -->
+    <!-- ************************************************************** -->	
+	<update id="updateSkill" parameterType="Skill">
+		UPDATE uz_skill
+		   SET name = #{name}, code = #{code}, top = #{top}
+		 WHERE id = #{id}
+	</update>
+		
+    <!-- ****************************Delete**************************** -->
+    <!-- Delete Information                                             -->
+    <!-- ************************************************************** -->
+	<delete id="deleteSkill" parameterType="int">
+		DELETE FROM uz_skill
+		 WHERE id = #{skillId}
+	</delete>
+	
+	<delete id="deleteReviewUserSkill" parameterType="Map">
+		DELETE FROM uz_user_review_skill
+		 WHERE userId = #{userId}
+		   AND reviewId = #{reviewId}
+	</delete>
+ 
+</mapper>

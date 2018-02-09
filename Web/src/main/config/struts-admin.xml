@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+
+	<package name="admin-default" namespace="/uz-admin" extends="struts-default" strict-method-invocation="false">
+		
+   	 	<interceptors>
+			<interceptor name="AdminCenterInterceptor" class="com.uzskill.admin.interceptor.AdminCenterInterceptor"/>
+			<interceptor-stack name="AdminCenterStack"> 
+                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="AdminCenterInterceptor"/>
+            </interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="AdminCenterStack" />
+		
+		<!-- ************************************************************* -->
+		<!-- Global Setting -->
+		<!-- ************************************************************* -->
+		<global-results>
+			<result name="admin-login" type="redirect">admin-login</result>
+		</global-results>
+		
+		<!-- ************************************************************** -->
+    		<!-- Action and Manager Configuration                               -->
+    		<!-- ************************************************************** -->
+    	
+		<action name="admin-login" class="com.uzskill.admin.login.AdminLoginAction" >
+			<result name="input">/WEB-INF/admin/admin-login.jsp</result>
+			<result name="success" type="redirect">admin-main</result>
+		</action>
+		
+		<action name="admin-logout" class="com.uzskill.admin.login.AdminLoginAction" method="logout">
+			<result name="success" type="redirect">admin-login</result>
+		</action>
+				
+		<action name="admin-main" class="com.uzskill.admin.action.AdminMainAction">
+			<result name="success">/WEB-INF/admin/admin-main.jsp</result>
+		</action>
+		
+		<action name="user-mag" class="com.uzskill.admin.user.UserManagementAction">
+			<result name="success">/WEB-INF/admin/user-mag.jsp</result>
+			<result name="review">/WEB-INF/admin/user-review.jsp</result>
+			<result name="review-history">/WEB-INF/admin/user-review-history.jsp</result>
+			<result name="review-list">/WEB-INF/admin/user-review-list.jsp</result>
+		</action>
+		
+		<action name="message-mag" class="com.uzskill.admin.message.MessageManagementAction">
+			<result name="success">/WEB-INF/admin/message-mag.jsp</result>
+			<result name="add">/WEB-INF/admin/message-add.jsp</result>
+		</action>
+		
+		<action name="feedback-mag" class="com.uzskill.admin.feedback.FeedbackManagementAction">
+			<result name="success">/WEB-INF/admin/feedback-mag.jsp</result>
+		</action>
+		
+		<action name="admin-user-mag" class="com.uzskill.admin.user.AdminUserManagementAction">
+			<result name="success">/WEB-INF/admin/admin-user-mag.jsp</result>
+			<result name="add">/WEB-INF/admin/admin-user-add.jsp</result>
+			<result name="password">/WEB-INF/admin/admin-user-password.jsp</result>
+		</action>
+
+	</package>
+</struts>

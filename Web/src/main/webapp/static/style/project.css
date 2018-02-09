@@ -1,0 +1,173 @@
+@charset "utf-8";
+/* CSS Document */
+
+#pj-bg
+{
+	background:url(../img/pj/banner2.jpg) no-repeat;
+	min-height:750px;
+	background-color:#eeeeee;
+	position:relative;
+	background-position:50% 0;
+	padding-top:100px;
+	padding-bottom: 40px;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+    -moz-background-size: contain;
+    background-size:100% 400px;
+}
+#pj
+{
+	width:1198px;
+	border-radius:5px;
+	background-color:#ffffff;
+	min-height: 750px;
+	margin: 0 auto;
+	margin-bottom: 60px;
+}
+#pj #detail{
+	width: 780px;
+	float: left;
+	padding: 20px 40px;
+	margin:20px auto;
+}
+#detail .info span {
+	font-size: 26px;
+	margin-bottom: 20px;
+	line-height: 30px;
+	display: block;
+}
+#detail .info a {
+	color: #01A2F2;
+}
+#detail .info span em{
+	font-size: 16px;
+	margin-left: 40px;
+	padding: 5px 10px;
+	border-radius: 8px;
+	color: #01A2F2;
+	border: 1px solid #01A2F2;
+	vertical-align:middle;
+}
+#detail .info dl{
+	float: left;
+	width: 580px;
+	line-height: 26px;
+	margin-bottom: 40px;
+}
+#detail .info dl dt {
+	float: left;
+	color: #868686;
+	margin-right: 10px;
+}
+#detail .info dl dd {
+	float: left;
+	width: 180px;
+}
+#detail .desc {
+	clear:both;
+}
+#detail .desc span{
+	font-size: 20px;
+	height: 40px;
+	width: 90px;
+	display: block;
+	border-bottom: 2px solid #e0e0e0;
+}
+#detail .desc div{
+	margin-top: 30px;
+	line-height: 25px;
+}
+#sider {
+	width: 310px;
+	float: right;
+	margin: 30px 20px 0 0;
+	text-align: center;
+	border-radius: 3px;
+    padding-top: 60px;
+    background-color: #fafafa;
+    border: 1px solid #e2e2e2;
+}
+#sider #bid {
+	background-color: #01A2F2;
+    color: #fff;
+    width: 280px;
+    height: 48px;
+    display: inline-block;
+    line-height: 48px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 20px;
+	vertical-align: middle;
+	cursor:pointer;
+	border: 0;
+	margin-bottom: 30px;
+}
+#sider .fav{
+	margin: 2px 20px;
+	text-align: right;
+	color: #1669B2;
+	font-size: 15px;
+}
+#sider .fav b{
+	cursor: pointer;
+}
+#sider dl {
+	margin-top: 40px;
+	padding: 10px 0;
+	color: #888;
+	height: 60px;
+	line-height: 30px;
+	background-color: #f2f2f2;
+	border-radius: 3px;
+}
+#sider dl dd{
+	width: 100px;
+	float: left;
+}
+#sider dl dd i{
+	color: #444;
+	margin-right: 4px;
+}
+#project-confirm {
+	display: none;
+	width: 600px;
+	height: 400px;
+    z-index:111;
+}
+#project-confirm .tip{
+	height: 30px;
+	line-height: 30px;
+	color: #888;
+}
+#project-confirm .input-uz {
+	width: 300px;
+	margin: 10px auto;
+	border: 1px solid #ccc;
+	padding-left: 6px;
+	border-radius: 3px;
+}
+
+#project-confirm input[type=text]{
+	width: 98%;
+	height: 40px;
+	border: 0;
+}
+#project-confirm textarea {
+	height: 100px;
+	line-height: 22px;
+	width: 98%;
+	border: 0;
+	outline:0;
+}
+#project-confirm .btn{
+	width: 120px;
+	height: 40px;
+	margin: 20px 15px;
+}
+#project-confirm .error-msg {
+	width: 300px;
+	height: 20px;
+	line-height: 20px;
+	margin: 0 auto;
+	text-align: left;
+	font-size: 14px;
+}

@@ -1,0 +1,120 @@
+﻿<html>
+<head>
+<title>UZWORK Login</title>
+<link rel="stylesheet" type="text/css" href="../static/style.css" />
+<script type="text/javascript" src="../static/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../static/api-script.js"></script>
+</head>
+<body style="background-color: #fff;">
+<div class="inner">
+系统初始化
+<hr size="1px">
+<table>
+	<tr><td class="label">接口地址：</td><td class="cont">{domain}/init</td></tr>
+	<tr><td class="label">请求方式：</td><td>GET</td></tr>
+	<tr><td class="label">接口描述：</td><td class="cont">客户端访问开始时调用该接口取得初始化数据，如：最新用户信息、版本信息、配置信息等。<br>系统会根据token来判断当前用户是否已登录：<br>1、未登录，则不返回任何用户相关信息。<br>2、已登录，用户未被锁定则返回最新用户信息；用户已被锁定则返回新的token，客户端用其替换本地已经保存的token。
+	<br>如果是APP访问，则需要传递参数“versionId”用来做版本检测。如果是浏览器访问则无需该参数。
+	</td></tr>
+	<tr><td class="label">请求参数：</td><td>
+		<table>
+			<thead>
+				<tr><th class="td30">参数名</th><th class="td10">必选</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>versionId</td><td>Yes</td><td>String</td><td>APP版本ID，根据ID做版本更新检查；如果是浏览器访问则不需要该参数。</td></tr>
+				<!-- <tr><td></td><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+	</td></tr>
+	<tr><td class="label">返回示例：</td><td>
+		<div class="json">
+{
+    "message": "",
+    "success": true,
+    "value": {
+        "versionId": 100,
+        "updateURL": "",
+        "forceUpdate": 0,
+        "user": {
+            "activeB": 1,
+            "category": [
+                {
+                    "code": "BRAND_OPR",
+                    "id": 58,
+                    "name": "品牌运营",
+                    "parentId": 23,
+                    "sort": 30
+                },
+                {
+                    "code": "ACTIVITY_PLAN",
+                    "id": 56,
+                    "name": "活动策划",
+                    "parentId": 23,
+                    "sort": 40
+                }
+            ],
+            "cellPhone": "13888888880",
+            "city": "北京",
+            "completedRatio": 0,
+            "createdIp": "127.0.0.1",
+            "createdTime": "2017-05-26 11:09",
+            "email": "",
+            "idCard": "",
+            "idImage": "2017/5/149577004305032846.jpg",
+            "loginIp": "127.0.0.1",
+            "loginTime": "2017-07-11 14:42",
+            "logins": 26,
+            "msgNumber": 4,
+            "onBudget": 0,
+            "onTime": 0,
+            "realName": "",
+            "reviewId": 0,
+            "satisfaction": 0,
+            "skill": [
+                {
+                    "code": "",
+                    "id": 0,
+                    "name": "品牌建设",
+                    "top": false
+                },
+                {
+                    "code": "",
+                    "id": 0,
+                    "name": "创意方案",
+                    "top": false
+                }
+            ],
+            "star": 0,
+            "status": "QUALIFIED",
+            "statusId": 2,
+            "title": "独立策划人",
+            "userId": 36,
+            "userIdStr": "91b84876ad0452bf",
+            "userType": "FREE",
+            "userTypeId": 0,
+            "username": "NEKO",
+            "workYears": "M10",
+            "workYearsId": 4
+        },
+        "versionNumber": "1.0.0"
+    }
+}
+		</div>
+	</td></tr>
+	<tr><td class="label">返回说明：</td><td>
+		<table>
+			<thead>
+				<tr><th class="td30">字段名</th><th class="td10">类型</th><th class="td50">说明</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>success</td><td>boolean</td><td>“true/false”代表“成功/失败”</td></tr>
+				<tr><td>message</td><td>String</td><td>后台返回的消息</td></tr>
+				
+				<!-- <tr><td></td><td></td><td></td></tr> -->
+			</tbody>
+		</table>
+	</td></tr>
+</table>
+</div>
+</body>
+</html>

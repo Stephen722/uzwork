@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+    <!-- ************************************************************** -->
+    <!-- Import the configurations of base                              -->
+    <!-- ************************************************************** -->
+    <import resource="classpath:config/applicationConfig-base.xml"/>
+    
+    <bean id="MobileBaseAction" class="com.uzwork.mobile.action.MobileBaseAction" parent="BaseAction" abstract="true" />
+
+	<bean id="com.uzwork.mobile.action.ErrorAction" class="com.uzwork.mobile.action.ErrorAction" parent="MobileBaseAction" scope="prototype" />
+    
+    <!-- ************************************************************** -->
+    <!-- Define API Manager and Action                                  -->
+    <!-- ************************************************************** -->    
+    <bean id="com.uzwork.mobile.token.AccessTokenAction" class="com.uzwork.mobile.token.AccessTokenAction" parent="MobileBaseAction" scope="prototype" />
+    
+    <bean id="com.uzwork.mobile.project.ProjectAction" class="com.uzwork.mobile.project.ProjectAction" parent="MobileBaseAction" scope="prototype">
+    	<property name="projectManager" ref="ProjectManager" />
+    	<property name="userManager" ref="UserManager" />
+    	<property name="categoryManager" ref="CategoryManager" />
+    </bean>
+    
+    <bean id="com.uzwork.mobile.category.CategoryAction" class="com.uzwork.mobile.category.CategoryAction" parent="MobileBaseAction" scope="prototype">
+    	<property name="projectManager" ref="ProjectManager" />
+    	<property name="categoryManager" ref="CategoryManager" />
+    </bean>
+        
+    <bean id="com.uzwork.mobile.user.UserAction" class="com.uzwork.mobile.user.UserAction" parent="MobileBaseAction" scope="prototype">
+		<property name="userManager" ref="UserManager" />
+    	<property name="categoryManager" ref="CategoryManager" />
+    </bean>  
+
+</beans>

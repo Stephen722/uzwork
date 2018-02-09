@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+
+	<constant name="struts.locale" value="zh_CN" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.multipart.maxSize" value="5242880" />
+	<constant name="struts.multipart.saveDir" value="C:/temp" />
+	<!-- <constant name="struts.multipart.saveDir" value="/home/stephen/web/app/upload/temp" /> -->
+	<constant name="struts.action.extension" value=",go" />
+	<constant name="struts.mapper.class" value="strutsActionMapper" />
+	<constant name="struts.action.excludePattern" value="/static/.*,/WEB-INF/views/.*" />
+	
+	<include file="struts-default.xml"/>
+	<!-- Must include struts-plugin.xml since we change the default position of struts.xml -->
+	<include file="struts-plugin.xml"/>
+	<include file="config/struts-admin.xml"/>
+	<include file="config/struts-mobile.xml"/>
+	
+	<bean name="strutsActionMapper" class="com.light.struts.mapper.StrutsActionMapper"
+		  type="org.apache.struts2.dispatcher.mapper.ActionMapper" />
+		
+	<package name="default" extends="struts-default" strict-method-invocation="false">
+		<interceptors>
+			<interceptor-stack name="UZSkillDefaultStack">
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="UZSkillDefaultStack" />
+
+		<default-action-ref name="defaultPage" />
+
+		<global-results>
+			<result name="error">/WEB-INF/views/error/exception.jsp</result>
+		</global-results>
+		
+		<global-exception-mappings>
+			<exception-mapping name="exception" exception="java.lang.Exception" result="exception" />
+		</global-exception-mappings>
+		
+		<action name="defaultPage" class="DefaultAction">
+			<result name="success">/WEB-INF/views/error/default.jsp</result>
+		</action>
+		
+		<action name="chat">
+			<result name="success">/WEB-INF/views/chat/chat.jsp</result>
+		</action>
+
+		<!-- ***************************************************************************************** -->
+    	<!-- Action and Manager Configuration                                                          -->
+    	<!-- ***************************************************************************************** -->
+   		
+	</package>
+</struts>
