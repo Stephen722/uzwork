@@ -61,8 +61,8 @@ public class BaseMonitor<T> implements Runnable {
 		// retrieve one thousand objects at most
 		if(length <= fetchSize) {
 			// the list may be changed, MUST make sure the start value is correct
-			int start = 0 - length;
-			int end = -1;
+			int start = 0;
+			int end = length;
 			
 			switch (operation) {
 				case INSERT: 
@@ -84,10 +84,9 @@ public class BaseMonitor<T> implements Runnable {
 			if(remainder > 0) {
 				count ++;
 			}
-			int minusFetchSize = 0 - fetchSize;
 			for(int i = 0; i < count; i++) {
-				int start = minusFetchSize * (i + 1);
-				int end = minusFetchSize * i - 1;
+				int start = fetchSize * i;
+				int end = fetchSize * (i + 1) - 1;
 				
 				switch (operation) {
 					case INSERT: 
@@ -106,24 +105,20 @@ public class BaseMonitor<T> implements Runnable {
 		
 		// remove the saved data  
 		// the set may be changed, MUST get the latest length again
-		int newEnd = 0;
 		int newLength = baseManager.getRedis().lLen(listKey);
-		if(newLength > length) {
-			newEnd = newLength - length;
-		}
 		logger.debug("The new size is {}", newLength);
 		logger.debug("trim the saved key");
-		baseManager.getRedis().lTrim(listKey, 0, newEnd);
+		baseManager.getRedis().lTrim(listKey, length + 1, newLength);
 		
 		// the unsaved data should be written back into Redis 
 		if(operation.equals(CRUDEnum.DELETE)) {
 			if(unSavedIdList != null && !unSavedIdList.isEmpty()) {
-				logger.debug("There are {} object have not been saved", unSavedList.size());
+				logger.debug("There are {} object(s) have not been saved", unSavedList.size());
 				baseManager.getRedis().lSet(listKey, unSavedIdList.toArray());
 			}
 		}
 		else if(unSavedList != null && !unSavedList.isEmpty()) {
-			logger.debug("There are {} object have not been saved", unSavedList.size());
+			logger.debug("There are {} object(s) have not been saved", unSavedList.size());
 			baseManager.getRedis().lSet(listKey, unSavedList);
 		}
 	}
@@ -176,7 +171,8 @@ public class BaseMonitor<T> implements Runnable {
 		// if batch delete failed, then delete one by one to find which one cannot be persisted.
 		if(rows <= 0) {
 			for(String str : cachedIdList) {
-				int row = baseManager.delete(statement, str);
+				int id = Integer.parseInt(str);
+				int row = baseManager.delete(statement, id);
 				if(row <= 0) {
 					unSavedList.add(str);
 				}

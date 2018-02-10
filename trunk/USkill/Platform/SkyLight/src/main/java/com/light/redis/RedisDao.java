@@ -17,6 +17,7 @@ import com.light.utils.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.Response;
 import redis.clients.jedis.Transaction;
 
 /**
@@ -274,20 +275,19 @@ public class RedisDao {
     }
     
     /**
-     * Remove the value which is not in the specified range from list
+     * Keep the value which is in the specified range. 
+     * The "start" comes from client, the list may be changed, use the latest size to trim list with transactions.
      * 
      * Command: ltrim
      * 
      * @param key
      * @param start
      * @param end
-     * @return Status code reply
      */
-    public String lTrim(String key, int start, int end){
-    	String rtn = "";
+    public void lTrim(String key, int start, int end){
         Jedis jedis = getJedis();
         try {
-            rtn = jedis.ltrim(key, start, end);
+            jedis.ltrim(key, start, end);
         }
         catch (Exception e){
         	logger.error("Failed to trim list "+key+" from redis.", e);
@@ -295,7 +295,6 @@ public class RedisDao {
         finally {
             jedis.close();
         }
-        return rtn;
     }
     
     /**
@@ -829,8 +828,8 @@ public class RedisDao {
 				}
 				// delete from hash map (by key)
 				trans.hdel(hashKey, key);
-				// add the key into delete list
-				trans.lpush(listKey, key);
+				// add the key into delete list tail
+				trans.rpush(listKey, key);
 				
 				transRtn = trans.exec();
 			}
@@ -850,8 +849,8 @@ public class RedisDao {
 				}
 				// insert/update hash map
 				trans.hset(hashKey, key, strValue);
-				// add to sorted set
-				trans.lpush(listKey, strValue);
+				// add the value into list tail
+				trans.rpush(listKey, strValue);
 				transRtn = trans.exec();
 			}
 		} 
@@ -892,7 +891,7 @@ public class RedisDao {
 				// delete from sorted set
 				trans.zrem(setKey, key);
 				// add the key into delete list
-				trans.lpush(listKey, key);
+				trans.rpush(listKey, key);
 				transRtn = trans.exec();
 			}
 			else {
@@ -907,8 +906,8 @@ public class RedisDao {
 				Transaction trans = jedis.multi();
 				// insert/update sorted set
 				trans.zadd(setKey, Double.valueOf(key), strValue);
-				// add to sorted set
-				trans.lpush(listKey, strValue);
+				// add to list
+				trans.rpush(listKey, strValue);
 				transRtn = trans.exec();
 			}
 		} 
@@ -928,24 +927,24 @@ public class RedisDao {
     	List<T> rtnList = new ArrayList<T>();
 		try {
 			List<String> strList = null;
-			Set<String> idSet = null;
+			Response<Set<String>> responseSet= null;
 			Transaction trans = jedis.multi();
 			if(firstPage) {
-				idSet = trans.zrevrange(setKey, 0, 10).get();
+				responseSet = trans.zrevrange(setKey, 0, 10);
 			}
 			else {
 				// "start" is the score. 
 				// Because of the score may be not continuous, minus 100 (more or less) to make sure 10 keys with this range.  
 				int end = start - 100;
-				idSet = trans.zrevrangeByScore(setKey, start, end, 1, 10).get();
+				responseSet = trans.zrevrangeByScore(setKey, start, end, 1, 10);
 			}
-			
+			trans.exec(); 
+			// call responseSet.get() before trans.exec(), it causes "Exception: Please close pipeline or multi block before calling this method."
+			Set<String> idSet = responseSet.get();
 			if(idSet != null && !idSet.isEmpty()) {
 				String[] idArray = (String[]) idSet.toArray();
 				strList = trans.hmget(hashKey, idArray).get();
 			}
-			
-			trans.exec();
 			
 			if(strList != null && strList.size() > 0) {
 				for(String objStr : strList) {

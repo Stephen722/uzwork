@@ -29,6 +29,8 @@
 	<typeAliases>
 		<typeAlias alias="User" type="com.uzskill.base.user.bean.User"/>
 		<typeAlias alias="Topic" type="com.uzskill.base.topic.bean.Topic"/>
+		<typeAlias alias="TopicComment" type="com.uzskill.base.topic.bean.TopicComment"/>
+		<typeAlias alias="TopicPraise" type="com.uzskill.base.topic.bean.TopicPraise"/>
 		<typeAlias alias="Skill" type="com.uzskill.base.skill.bean.Skill"/>
 	</typeAliases>
 	

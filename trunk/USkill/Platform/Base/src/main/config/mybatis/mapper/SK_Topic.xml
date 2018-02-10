@@ -31,6 +31,16 @@
 		INSERT sk_topic(topicId, userId, content, imageB, createdTime)
 	    VALUES (#{topicId},#{userId}, #{content}, #{imageB}, #{createdTime})
 	</insert>
+	
+	<insert id="insertTopicComment" parameterType="TopicComment">
+		INSERT sk_topic_comment(id, topicId, postUserId, targetUserId, content, createdTime)
+	    VALUES (#{id}, #{topicId}, #{postUserId}, #{targetUserId}, #{content}, #{createdTime})
+	</insert>
+	
+	<insert id="insertTopicPraise" parameterType="TopicPraise">
+		INSERT sk_topic_praise(id, topicId, postUserId, targetUserId, createdTime)
+	    VALUES (#{id}, #{topicId}, #{postUserId}, #{targetUserId}, #{createdTime})
+	</insert>
 
     <!-- ****************************Update**************************** -->
     <!-- Update Topic Information                                       -->
@@ -40,6 +50,14 @@
     <!-- Delete Topic Information                                       -->
     <!-- ************************************************************** -->
 	<delete id="deleteTopic" parameterType="int">
-		DELETE FROM sk_topic t WHERE t.topicId = #{topicId}
+		DELETE FROM sk_topic WHERE topicId = #{topicId}
+	</delete>
+	
+	<delete id="deleteTopicComment" parameterType="int">
+		DELETE FROM sk_topic_comment WHERE id = #{id}
+	</delete>
+	
+	<delete id="deleteTopicPraise" parameterType="int">
+		DELETE FROM sk_topic_praise WHERE id = #{id}
 	</delete>
 </mapper>

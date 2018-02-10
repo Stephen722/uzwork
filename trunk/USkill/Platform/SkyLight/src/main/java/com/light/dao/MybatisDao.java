@@ -81,8 +81,6 @@ public class MybatisDao {
 			}
 			catch(Exception e){
 				logger.error("Failed to insert for '" + id + "'." + "\n Exception:" + e.toString());
-				MybatisException me = new MybatisException("Failed to insert for '" + id + "'", e);
-	            throw me;
 			}
 			finally {
 				sqlSession.close();
