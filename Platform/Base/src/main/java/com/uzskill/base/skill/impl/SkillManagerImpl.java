@@ -61,7 +61,7 @@ public class SkillManagerImpl extends BaseManager implements SkillManager {
 	 * @return Skill list
 	 */
 	private List<Skill> getSkillList(boolean firstPage, int start) {
-		return getRedis().getSortSetObject(SkillQuery.REDIS_SKILL_MAP, SkillQuery.REDIS_SKILL_SET, firstPage, start, Skill.class);
+		return getPageList(SkillQuery.REDIS_SKILL_MAP, SkillQuery.REDIS_SKILL_SET, firstPage, start, Skill.class);
 	}
 
 	@Override

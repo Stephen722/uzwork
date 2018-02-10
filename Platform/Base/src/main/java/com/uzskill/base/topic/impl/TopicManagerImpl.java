@@ -75,7 +75,7 @@ public class TopicManagerImpl extends BaseManager implements TopicManager {
 	 * @return Topic list
 	 */
 	private List<Topic> getTopicList(boolean firstPage, int start) {
-		return getRedis().getSortSetObject(TopicQuery.REDIS_TOPIC_MAP, TopicQuery.REDIS_TOPIC_SET, firstPage, start, Topic.class);
+		return getPageList(TopicQuery.REDIS_TOPIC_MAP, TopicQuery.REDIS_TOPIC_SET, firstPage, start, Topic.class);
 	}
 
 	@Override
