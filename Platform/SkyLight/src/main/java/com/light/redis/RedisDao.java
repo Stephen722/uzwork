@@ -17,7 +17,6 @@ import com.light.utils.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.Response;
 import redis.clients.jedis.Transaction;
 
 /**
@@ -875,7 +874,7 @@ public class RedisDao {
      * @param category
      * @param key
      * @param value
-     * @param hasSet whether the category has the sorted set "category:set" 
+     * @param setKey the sorted set "category:set" 
      * @return
      */
     public List<Object> transactionExecSub(CRUDEnum operation, String category, String key, Object value, String setKey) {
@@ -920,49 +919,6 @@ public class RedisDao {
 			}
 		}
 		return transRtn;
-    }
-    
-    public <T> List<T> getSortSetObject(String hashKey, String setKey, boolean firstPage, int start, Class<T> clazz) {
-    	Jedis jedis = getJedis();
-    	List<T> rtnList = new ArrayList<T>();
-		try {
-			List<String> strList = null;
-			Response<Set<String>> responseSet= null;
-			Transaction trans = jedis.multi();
-			if(firstPage) {
-				responseSet = trans.zrevrange(setKey, 0, 10);
-			}
-			else {
-				// "start" is the score. 
-				// Because of the score may be not continuous, minus 100 (more or less) to make sure 10 keys with this range.  
-				int end = start - 100;
-				responseSet = trans.zrevrangeByScore(setKey, start, end, 1, 10);
-			}
-			trans.exec(); 
-			// call responseSet.get() before trans.exec(), it causes "Exception: Please close pipeline or multi block before calling this method."
-			Set<String> idSet = responseSet.get();
-			if(idSet != null && !idSet.isEmpty()) {
-				String[] idArray = (String[]) idSet.toArray();
-				strList = trans.hmget(hashKey, idArray).get();
-			}
-			
-			if(strList != null && strList.size() > 0) {
-				for(String objStr : strList) {
-					T t = RedisUtils.jsonUnSerialize(objStr, clazz);
-					rtnList.add(t);
-				}
-			}
-			
-		} 
-		catch (Exception e) {
-			logger.error("Failed to save data into redis.", e);
-		} 
-		finally {
-			if (jedis != null) {
-				jedis.close();
-			}
-		}
-		return rtnList;
     }
     
     /**
