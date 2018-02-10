@@ -31,10 +31,19 @@ public class TopicManagerImpl extends BaseManager implements TopicManager {
 //	}
 	
 	public TopicManagerImpl() {
-//		BaseMonitor<Topic> insertBM = new BaseMonitor<Topic>(TopicQuery.REDIS_TOPIC, CRUDEnum.INSERT, TopicQuery.INSERT_TOPIC, Topic.class, this);
+		BaseMonitor<Topic> insertBM = new BaseMonitor<Topic>(TopicQuery.REDIS_TOPIC, CRUDEnum.INSERT, TopicQuery.INSERT_TOPIC, Topic.class, this);
 		BaseMonitor<Topic> deleteBM = new BaseMonitor<Topic>(TopicQuery.REDIS_TOPIC, CRUDEnum.DELETE, TopicQuery.DELETE_TOPIC, Topic.class, this);
-//		scheduledServive.scheduleAtFixedRate(insertBM, 1, 60, TimeUnit.SECONDS);
-		scheduledServive.scheduleAtFixedRate(deleteBM, 2, 60, TimeUnit.SECONDS);
+		BaseMonitor<TopicComment> insertCommentBM = new BaseMonitor<TopicComment>(TopicQuery.REDIS_TOPIC_COMMENT, CRUDEnum.INSERT, TopicQuery.INSERT_TOPIC_COMMENT, TopicComment.class, this);
+		BaseMonitor<TopicComment> deleteCommentBM = new BaseMonitor<TopicComment>(TopicQuery.REDIS_TOPIC_COMMENT, CRUDEnum.DELETE, TopicQuery.DELETE_TOPIC_COMMENT, TopicComment.class, this);
+		BaseMonitor<TopicPraise> insertPraiseBM = new BaseMonitor<TopicPraise>(TopicQuery.REDIS_TOPIC_PRAISE, CRUDEnum.INSERT, TopicQuery.INSERT_TOPIC_PRAISE, TopicPraise.class,this);
+		BaseMonitor<TopicPraise> deletePraiseBM = new BaseMonitor<TopicPraise>(TopicQuery.REDIS_TOPIC_PRAISE, CRUDEnum.DELETE, TopicQuery.DELETE_TOPIC_PRAISE, TopicPraise.class, this);
+		
+		scheduledServive.scheduleAtFixedRate(insertBM, 20, 120, TimeUnit.SECONDS);
+		scheduledServive.scheduleAtFixedRate(deleteBM, 30, 120, TimeUnit.SECONDS);
+		scheduledServive.scheduleAtFixedRate(insertCommentBM, 60, 120, TimeUnit.SECONDS);
+		scheduledServive.scheduleAtFixedRate(deleteCommentBM, 70, 120, TimeUnit.SECONDS);
+		scheduledServive.scheduleAtFixedRate(insertPraiseBM, 90, 120, TimeUnit.SECONDS);
+		scheduledServive.scheduleAtFixedRate(deletePraiseBM, 100, 120, TimeUnit.SECONDS);
 	}
 	@Override
 	public Topic getTopic(int topicId) {

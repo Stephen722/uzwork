@@ -7,8 +7,8 @@
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} | %p - %l | %m%n"/>
         </Console>
         
-        <RollingFile name="RollingFileDebug" fileName="D:/Temp/logs/debug.log"
-            filePattern="D:/Temp/logs/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="RollingFileDebug" fileName="/Users/stephen/Temp/logs/debug.log"
+            filePattern="/Users/stephen/Temp/logs/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log">
             <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->        
             <Filters>
                 <ThresholdFilter level="DEBUG"/>
@@ -23,8 +23,8 @@
             <DefaultRolloverStrategy max="20" min="0" />  
         </RollingFile>
     
-        <RollingFile name="RollingFileInfo" fileName="D:/Temp/logs/info.log"
-            filePattern="D:/Temp/logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">      
+        <RollingFile name="RollingFileInfo" fileName="/Users/stephen/Temp/logs/info.log"
+            filePattern="/Users/stephen/Temp/logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">      
             <Filters>
                 <ThresholdFilter level="INFO"/>
                 <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
@@ -38,8 +38,8 @@
             <DefaultRolloverStrategy max="20" min="0" />  
         </RollingFile>
  
-        <RollingFile name="RollingFileWarn" fileName="D:/Temp/logs/warn.log"
-            filePattern="D:/Temp/logs/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="RollingFileWarn" fileName="/Users/stephen/Temp/logs/warn.log"
+            filePattern="/Users/stephen/Temp/logs/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">
             <Filters>
                 <ThresholdFilter level="WARN"/>
                 <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
@@ -53,8 +53,8 @@
             <DefaultRolloverStrategy max="20" min="0" />  
         </RollingFile>
  
-        <RollingFile name="RollingFileError" fileName="D:/Temp/logs/error.log"
-            filePattern="D:/Temp/logs/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="RollingFileError" fileName="/Users/stephen/Temp/logs/error.log"
+            filePattern="/Users/stephen/Temp/logs/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
             <ThresholdFilter level="ERROR"/>
            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} | %p - %l | %m%n"/>
             <Policies>
@@ -65,8 +65,8 @@
             <DefaultRolloverStrategy max="10" min="0" />  
         </RollingFile>
         
-        <RollingFile name="RollingFileFatal" fileName="D:/Temp/logs/fatal.log"
-            filePattern="D:/Temp/logs/$${date:yyyy-MM}/fatal-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="RollingFileFatal" fileName="/Users/stephen/Temp/logs/fatal.log"
+            filePattern="/Users/stephen/Temp/logs/$${date:yyyy-MM}/fatal-%d{yyyy-MM-dd}-%i.log">
             <ThresholdFilter level="FATAL"/>
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} | %p - %l | %m%n"/>
             <Policies>

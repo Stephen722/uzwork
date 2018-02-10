@@ -43,6 +43,10 @@ public class TopicQuery {
 	// DB queries
 	public static final String GET_TOPIC_BY_ID = "SK_Topic.getTopicById";
 	public static final String INSERT_TOPIC = "SK_Topic.insertTopic";
+	public static final String INSERT_TOPIC_COMMENT = "SK_Topic.insertTopicComment";
+	public static final String INSERT_TOPIC_PRAISE = "SK_Topic.insertTopicPraise";
 	public static final String DELETE_TOPIC = "SK_Topic.deleteTopic";
+	public static final String DELETE_TOPIC_COMMENT = "SK_Topic.deleteTopicComment";
+	public static final String DELETE_TOPIC_PRAISE = "SK_Topic.deleteTopicPraise";
 	
 }
