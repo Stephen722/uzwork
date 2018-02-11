@@ -41,6 +41,11 @@
 	</filter>
 	
 	<!-- ========================Spring Listener========================== -->
+<!-- 	<listener>
+		<listener-class>com.light.spring.SpringContextLoaderListener</listener-class>
+	</listener> -->
+	
+	<!-- ===========Spring Listener ONLY FOR SYNC DATA INTO DATABASE============ -->
 	<listener>
 		<listener-class>com.uzskill.base.spring.SkillSpringContextLoaderListener</listener-class>
 	</listener>

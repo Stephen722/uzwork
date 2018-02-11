@@ -1,11 +1,8 @@
 package com.uzskill.base.skill.impl;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import com.light.redis.CRUDEnum;
 import com.uzskill.base.manager.BaseManager;
-import com.uzskill.base.schedule.SynchonizeScheduleService;
 import com.uzskill.base.skill.SkillManager;
 import com.uzskill.base.skill.SkillQuery;
 import com.uzskill.base.skill.bean.Skill;
@@ -14,22 +11,6 @@ import com.uzskill.base.skill.bean.SkillPraise;
 import com.uzskill.base.topic.TopicQuery;
 
 public class SkillManagerImpl extends BaseManager implements SkillManager {
-	
-//	static {
-//		BaseMonitor<Skill> insertBM = new BaseMonitor<Skill>(SkillQuery.REDIS_SKILL, CRUDEnum.INSERT, "", Skill.class);
-//		BaseMonitor<Skill> deleteBM = new BaseMonitor<Skill>(SkillQuery.REDIS_SKILL, CRUDEnum.DELETE, "", Skill.class);
-//		BaseMonitor<SkillComment> insertCommentBM = new BaseMonitor<SkillComment>(SkillQuery.REDIS_SKILL_COMMENT, CRUDEnum.INSERT, "", SkillComment.class);
-//		BaseMonitor<SkillComment> deleteCommentBM = new BaseMonitor<SkillComment>(SkillQuery.REDIS_SKILL_COMMENT, CRUDEnum.DELETE, "", SkillComment.class);
-//		BaseMonitor<SkillPraise> insertPraiseBM = new BaseMonitor<SkillPraise>(SkillQuery.REDIS_SKILL_PRAISE, CRUDEnum.INSERT, "", SkillPraise.class);
-//		BaseMonitor<SkillPraise> deletePraiseBM = new BaseMonitor<SkillPraise>(SkillQuery.REDIS_SKILL_PRAISE, CRUDEnum.DELETE, "", SkillPraise.class);
-//		
-//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(insertBM, 420, 900, TimeUnit.SECONDS);
-//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(deleteBM, 480, 900, TimeUnit.SECONDS);
-//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(insertCommentBM, 540, 180, TimeUnit.SECONDS);
-//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(deleteCommentBM, 600, 180, TimeUnit.SECONDS);
-//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(insertPraiseBM, 660, 180, TimeUnit.SECONDS);
-//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(deletePraiseBM, 720, 180, TimeUnit.SECONDS);
-//	}
 	
 	@Override
 	public Skill getSkill(int skillId) {

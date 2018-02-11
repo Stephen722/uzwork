@@ -1,16 +1,13 @@
 package com.uzskill.base.user.impl;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.light.record.ResultList;
-import com.light.redis.CRUDEnum;
 import com.light.utils.DateUtils;
 import com.uzskill.base.manager.BaseManager;
-import com.uzskill.base.schedule.SynchonizeScheduleService;
 import com.uzskill.base.user.UserManager;
 import com.uzskill.base.user.UserQuery;
 import com.uzskill.base.user.bean.User;
@@ -26,21 +23,6 @@ import com.uzskill.base.user.bean.User;
 public class UserManagerImpl extends BaseManager implements UserManager {
 	
 	private static final Logger logger = LogManager.getLogger(UserManagerImpl.class);
-	
-//	static {
-//		BaseMonitor<User> insertBM = new BaseMonitor<User>(UserQuery.REDIS_USER, CRUDEnum.INSERT, UserQuery.INSERT_USER, User.class, this);
-//		BaseMonitor<User> updateBM = new BaseMonitor<User>(UserQuery.REDIS_USER, CRUDEnum.UPDATE, UserQuery.INSERT_USER, User.class, this);
-		
-//		scheduledServive.scheduleAtFixedRate(insertBM, 1800, 1800, TimeUnit.SECONDS);
-//		scheduledServive.scheduleAtFixedRate(updateBM, 1800, 1800, TimeUnit.SECONDS);
-//	}
-	
-	public UserManagerImpl() {
-//		BaseMonitor<User> insertBM = new BaseMonitor<User>(UserQuery.REDIS_USER, CRUDEnum.INSERT, UserQuery.INSERT_USER, User.class, this);
-//		BaseMonitor<User> updateBM = new BaseMonitor<User>(UserQuery.REDIS_USER, CRUDEnum.UPDATE, UserQuery.INSERT_USER, User.class, this);
-//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(insertBM, 1800, 1800, TimeUnit.SECONDS);
-//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(updateBM, 1800, 1800, TimeUnit.SECONDS);
-	}
 	
 	@Override
 	public User getUserById(int userId) {

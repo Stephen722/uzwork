@@ -9,35 +9,41 @@ import org.apache.logging.log4j.Logger;
 
 import com.light.app.ApplicationContext;
 
-public class SynchonizeScheduleService{
-	private static final Logger logger = LogManager.getLogger(SynchonizeScheduleService.class);
+/**
+ * ApplicationContext cannot be used to get the instance because this class will be created before ApplicationContext
+ * 
+ * @author Stephen
+ *
+ */
+public class SynchronizeScheduleService{
+	private static final Logger logger = LogManager.getLogger(SynchronizeScheduleService.class);
 	
-	private static final int POOL_SIZE = 15;
-	private static SynchonizeScheduleService instance;
+	private static final int POOL_SIZE = 14;
+	private static SynchronizeScheduleService instance;
 	private static ScheduledExecutorService scheduledServive;
 	private static final String BEAN_NAME = "SynchonizeScheduleService";
 	
-	private SynchonizeScheduleService() {
+	private SynchronizeScheduleService() {
 		
 	}
 	
 	/**
-	 * Return a SynchonizeScheduleService instance
+	 * Return a SynchronizeScheduleService instance
 	 * 
-	 * @return SynchonizeScheduleService
+	 * @return SynchronizeScheduleService
 	 */
-	public static final SynchonizeScheduleService getInstance() {
+	public static final SynchronizeScheduleService getInstance() {
 		if (instance == null) {
-			synchronized(SynchonizeScheduleService.class) {
+			synchronized(SynchronizeScheduleService.class) {
 				if (instance == null) {
 					if (ApplicationContext.getInstance().hasBean(BEAN_NAME)) {
-						instance = (SynchonizeScheduleService) ApplicationContext.getInstance().getBean(BEAN_NAME);
+						instance = (SynchronizeScheduleService) ApplicationContext.getInstance().getBean(BEAN_NAME);
 					}
 					else {
-						instance = new SynchonizeScheduleService();
+						instance = new SynchronizeScheduleService();
 					}
 					scheduledServive = Executors.newScheduledThreadPool(POOL_SIZE);
-					logger.info("Initialized an instance of UserSessionManager.");
+					logger.info("Initialized an instance of SynchronizeScheduleService.");
 				}
 			}
 		}
@@ -45,6 +51,7 @@ public class SynchonizeScheduleService{
 	}
 	
 	public void scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit) {
+		logger.info("Starting monitor command at fixed rate");
 		scheduledServive.scheduleAtFixedRate(command, initialDelay, period, unit);
 	}
 	
@@ -55,6 +62,7 @@ public class SynchonizeScheduleService{
 		if(scheduledServive != null && !scheduledServive.isShutdown()) {
 			scheduledServive.shutdown();
 		}
+		logger.info("Synchronize schedule service shutdown");
 	}
 
 }

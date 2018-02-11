@@ -14,7 +14,7 @@
     <!-- ************************************************************** -->
     <!-- Managers Configuration  				                        -->
     <!-- ************************************************************** -->
-    <bean id="BaseManager" class="com.uzskill.base.manager.BaseManager" abstract="true" parent="LightManager">
+    <bean id="BaseManager" class="com.uzskill.base.manager.BaseManager" parent="LightManager">
     	<property name="redis" ref="RedisDao" />
     </bean>
 
@@ -23,5 +23,14 @@
     <bean id="SkillManager" class="com.uzskill.base.skill.impl.SkillManagerImpl" parent="BaseManager" />
     
     <bean id="UserManager" class="com.uzskill.base.user.impl.UserManagerImpl" parent="BaseManager" />
+    
+    
+    <!-- ************************************************************** -->
+    <!-- Synchronize Schedule Processor                                      -->
+    <!-- ************************************************************** -->    
+    <!-- <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" /> --> 
+    <bean id="SynchronizeScheduleProcessor" class="com.uzskill.base.schedule.SynchronizeScheduleProcessor" >
+    	<property name="baseManager" ref="BaseManager" />
+    </bean>
     
 </beans>

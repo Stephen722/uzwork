@@ -46,7 +46,6 @@ public class MonitorCommand<T> implements Runnable {
 	 * @param clazz the class refers to category
 	 */
 	public void redisSync(String category, CRUDEnum operation, String statement, Class<T> clazz) {
-		logger.debug("Starting to synchonize data between Redis and database: category={}, operation={}", category, operation);
 		
 		String listKey = category + ":" + operation.name().toLowerCase();
 		int length = baseManager.getRedis().lLen(listKey);
@@ -54,6 +53,7 @@ public class MonitorCommand<T> implements Runnable {
 			return;
 		}
 		
+		logger.debug("Synchronization starting: {}", statement);
 		int fetchSize = 600;
 		List<T> unSavedList = null; // INSERT and UPDATE: the list of objects which have been persisted into database failed
 		List<String> unSavedIdList = null; // DELETE: the list of id which have been persisted into database faield
@@ -119,7 +119,7 @@ public class MonitorCommand<T> implements Runnable {
 			baseManager.getRedis().lSet(listKey, unSavedList);
 		}
 		
-		logger.debug("Synchonize data between Redis and database ended: category={}, operation={}", category, operation);
+		logger.debug("Synchronization ending: {}", statement);
 	}
 	
 	/**
@@ -135,7 +135,7 @@ public class MonitorCommand<T> implements Runnable {
 		int rows = baseManager.insertBatch(statement, cachedList);
 		// if batch insert failed, then insert one by one to find which one cannot be persisted.
 		if(rows <= 0) {
-			logger.debug("Batch insert failed, try to insert one by one");
+			logger.debug("{}, batch insert failed, try to insert one by one", statement);
 			for(T t : cachedList) {
 				int insRows = baseManager.insert(statement, t);
 				if(insRows <= 0) {
@@ -148,7 +148,7 @@ public class MonitorCommand<T> implements Runnable {
 			}
 		}
 		else {
-			logger.debug("Batch insert successfully, all data has been persisted into database");
+			logger.debug("{}, batch insert successfully", statement);
 		}
 		return unSavedList;
 	}
@@ -159,7 +159,7 @@ public class MonitorCommand<T> implements Runnable {
 		int rows = baseManager.updateBatch(statement, cachedList);
 		// if batch update failed, then update one by one to find which one cannot be persisted.
 		if(rows <= 0) {
-			logger.debug("Batch update failed, try to update one by one");
+			logger.debug("{}, batch update failed, try to update one by one", statement);
 			for(T t : cachedList) {
 				int row = baseManager.update(statement, t);
 				if(row <= 0) {
@@ -172,7 +172,7 @@ public class MonitorCommand<T> implements Runnable {
 			}
 		}
 		else {
-			logger.debug("Batch update successfully, all data has been persisted into database");
+			logger.debug("{}, batch update successfully", statement);
 		}
 		return unSavedList;
 	}
@@ -183,7 +183,7 @@ public class MonitorCommand<T> implements Runnable {
 		int rows = baseManager.deleteBatch(statement, cachedIdList);
 		// if batch delete failed, then delete one by one to find which one cannot be persisted.
 		if(rows <= 0) {
-			logger.debug("Batch delete failed, try to delete one by one");
+			logger.debug("{}, batch delete failed, try to delete one by one", statement);
 			for(String str : cachedIdList) {
 				int id = Integer.parseInt(str);
 				int row = baseManager.delete(statement, id);
@@ -197,7 +197,7 @@ public class MonitorCommand<T> implements Runnable {
 			}
 		}
 		else {
-			logger.debug("Batch delete successfully, all data has been deleted from database");
+			logger.debug("{}, batch delete successfully", statement);
 		}
 		return unSavedList;
 	}

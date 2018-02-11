@@ -32,6 +32,8 @@
 		<typeAlias alias="TopicComment" type="com.uzskill.base.topic.bean.TopicComment"/>
 		<typeAlias alias="TopicPraise" type="com.uzskill.base.topic.bean.TopicPraise"/>
 		<typeAlias alias="Skill" type="com.uzskill.base.skill.bean.Skill"/>
+		<typeAlias alias="SkillComment" type="com.uzskill.base.skill.bean.SkillComment"/>
+		<typeAlias alias="SkillPraise" type="com.uzskill.base.skill.bean.SkillComment"/>
 	</typeAliases>
 	
 	<!-- ************************************************************** -->

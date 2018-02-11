@@ -13,7 +13,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.light.exception.MybatisException;
 import com.light.record.ResultList;
 
 /**
@@ -53,8 +52,6 @@ public class MybatisDao {
 		}
 		catch(Exception e){
 			logger.error("Failed to insert for '" + id + "'." + "\n Exception:" + e.toString());
-			MybatisException me = new MybatisException("Failed to insert for '" + id + "'", e);
-            throw me;
 		}
 		finally {
 			sqlSession.close();
@@ -140,8 +137,6 @@ public class MybatisDao {
 		}
 		catch(Exception e){
 			logger.error("Failed to update for '" + id + "'." + "\n Exception:" + e.toString());
-			MybatisException me = new MybatisException("Failed to update for '" + id + "'", e);
-            throw me;
 		}
 		finally {
 			sqlSession.close();
@@ -168,8 +163,6 @@ public class MybatisDao {
 			}
 			catch(Exception e){
 				logger.error("Failed to update for '" + id + "'." + "\n Exception:" + e.toString());
-				MybatisException me = new MybatisException("Failed to update for '" + id + "'", e);
-	            throw me;
 			}
 			finally {
 				sqlSession.close();
@@ -229,8 +222,6 @@ public class MybatisDao {
 		}
 		catch(Exception e){
 			logger.error("Failed to delete for '" + id + "'." + "\n Exception:" + e.toString());
-			MybatisException me = new MybatisException("Failed to delete for '" + id + "'", e);
-            throw me;
 		}
 		finally {
 			sqlSession.close();
@@ -257,8 +248,6 @@ public class MybatisDao {
 			}
 			catch(Exception e){
 				logger.error("Failed to delete for '" + id + "'." + "\n Exception:" + e.toString());
-				MybatisException me = new MybatisException("Failed to delete for '" + id + "'", e);
-	            throw me;
 			}
 			finally {
 				sqlSession.close();
@@ -317,8 +306,6 @@ public class MybatisDao {
 		}
 		catch(Exception e){
 			logger.error("Failed to select for '" + id + "'." + "\n Exception:" + e.toString());
-			MybatisException me = new MybatisException("Failed to select for '" + id + "'", e);
-            throw me;
 		}
 		finally {
 			sqlSession.close();
@@ -341,8 +328,6 @@ public class MybatisDao {
 		}
 		catch(Exception e){
 			logger.error("Failed to select for '" + id + "'." + "\n Exception:" + e.toString());
-			MybatisException me = new MybatisException("Failed to select for '" + id + "'", e);
-            throw me;
 		}
 		finally {
 			sqlSession.close();
@@ -364,8 +349,6 @@ public class MybatisDao {
 		}
 		catch(Exception e){
 			logger.error("Failed to select for '" + id + "'." + "\n Exception:" + e.toString());
-			MybatisException me = new MybatisException("Failed to select for '" + id + "'", e);
-            throw me;
 		}
 		finally {
 			sqlSession.close();
@@ -388,8 +371,6 @@ public class MybatisDao {
 		}
 		catch(Exception e){
 			logger.error("Failed to select for '" + id + "'." + "\n Exception:" + e.toString());
-			MybatisException me = new MybatisException("Failed to select for '" + id + "'", e);
-            throw me;
 		}
 		finally {
 			sqlSession.close();
@@ -422,8 +403,6 @@ public class MybatisDao {
 		}
 		catch(Exception e){
 			logger.error("Failed to select for '" + id + "'." + "\n Exception:" + e.toString());
-			MybatisException me = new MybatisException("Failed to select for '" + id + "'", e);
-            throw me;
 		}
 		finally {
 			sqlSession.close();
@@ -450,8 +429,6 @@ public class MybatisDao {
 		}
 		catch(Exception e){
 			logger.error("Failed to select for '" + id + "'." + "\n Exception:" + e.toString());
-			MybatisException me = new MybatisException("Failed to select for '" + id + "'", e);
-            throw me;
 		}
 		finally {
 			sqlSession.close();
@@ -482,8 +459,6 @@ public class MybatisDao {
 		}
 		catch(Exception e){
 			logger.error("Failed to select for '" + id + "'." + "\n Exception:" + e.toString());
-			MybatisException me = new MybatisException("Failed to select for '" + id + "'", e);
-            throw me;
 		}
 		finally {
 			sqlSession.close();
@@ -507,8 +482,6 @@ public class MybatisDao {
 		}
 		catch(Exception e){
 			logger.error("Failed to select for '" + id + "'." + "\n Exception:" + e.toString());
-			MybatisException me = new MybatisException("Failed to select for '" + id + "'", e);
-            throw me;
 		}
 		finally {
 			sqlSession.close();
@@ -552,8 +525,6 @@ public class MybatisDao {
 		}
 		catch (Exception e) {
 			logger.error("Failed to initialize SqlSessionFactory.\n Exception:" + e.toString());
-			MybatisException me = new MybatisException("Failed to initialize SqlSessionFactory.", e);
-			throw me;
 		}
 		return sessionFactory;
 	}
