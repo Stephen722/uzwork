@@ -6,7 +6,7 @@
     <!-- Retrieve Skill Information                                     -->
     <!-- ************************************************************** -->
     <!-- Define the result map for Skill -->
-	<resultMap id="skillMap" type="Topic" >
+	<resultMap id="skillMap" type="Skill" >
 		<result property="skillId" column="skillId" />
     	<result property="userId" column="userId" />
     	<result property="content" column="content" />
@@ -32,6 +32,16 @@
 		INSERT sk_skill(skillId, userId, content, categoryId, imageB, createdTime)
 	    VALUES (#{skillId},#{userId}, #{content}, #{categoryId}, #{imageB}, #{createdTime})
 	</insert>
+		
+	<insert id="insertSkillComment" parameterType="SkillComment">
+		INSERT sk_skill_comment(id, skillId, postUserId, targetUserId, content, createdTime)
+	    VALUES (#{id}, #{skillId}, #{postUserId}, #{targetUserId}, #{content}, #{createdTime})
+	</insert>
+	
+	<insert id="insertSkillPraise" parameterType="SkillPraise">
+		INSERT sk_skill_praise(id, skillId, postUserId, targetUserId, createdTime)
+	    VALUES (#{id}, #{skillId}, #{postUserId}, #{targetUserId}, #{createdTime})
+	</insert>
 
     <!-- ****************************Update**************************** -->
     <!-- Update Skill Information                                       -->
@@ -43,5 +53,13 @@
 	<delete id="deleteSkill" parameterType="int">
 		DELETE FROM sk_skill
 		 WHERE skillId = #{skillId}
+	</delete>
+	
+	<delete id="deleteSkillComment" parameterType="int">
+		DELETE FROM sk_skill_comment WHERE id = #{id}
+	</delete>
+	
+	<delete id="deleteSkillPraise" parameterType="int">
+		DELETE FROM sk_skill_praise WHERE id = #{id}
 	</delete>
 </mapper>

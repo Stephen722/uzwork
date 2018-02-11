@@ -42,5 +42,11 @@ public class SkillQuery {
 	
 	// DB queries
 	public static final String GET_SKILL_BY_ID = "SK_Skill.getSkillById";
+	public static final String INSERT_SKILL = "SK_Skill.insertSkill";
+	public static final String INSERT_SKILL_COMMENT = "SK_Skill.insertSkillComment";
+	public static final String INSERT_SKILL_PRAISE = "SK_Skill.insertSkillPraise";
+	public static final String DELETE_SKILL = "SK_Skill.deleteSkill";
+	public static final String DELETE_SKILL_COMMENT = "SK_Skill.deleteSkillComment";
+	public static final String DELETE_SKILL_PRAISE = "SK_Skill.deleteSkillPraise";
 
 }

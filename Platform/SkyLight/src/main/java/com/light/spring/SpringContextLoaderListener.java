@@ -25,6 +25,7 @@ public class SpringContextLoaderListener extends ContextLoaderListener {
 	private static final Logger logger = LogManager.getLogger(SpringContextLoaderListener.class);
 	/**
 	 * 初始化web应用上下文。
+	 * Log4jServletContextListener.contextInitialized() executed before this method, so the logger works
 	 */
 	public void contextInitialized(ServletContextEvent event) {
 		super.contextInitialized(event);
@@ -40,10 +41,11 @@ public class SpringContextLoaderListener extends ContextLoaderListener {
 
 	/**
 	 * 注销web应用上下文。
+	 * Log4jServletContextListener.contextDestroyed() executed before this method, so the logger doesn't work any longer.
 	 */
 	public void contextDestroyed(ServletContextEvent event) {
-		super.contextDestroyed(event);
 		com.light.app.ApplicationContext.getInstance().setWebApplicationContext(null);
-		logger.info("Close Light Web Application Context.");		
+		logger.info("Close Light Web Application Context.");
+		super.contextDestroyed(event);
 	}
 }
