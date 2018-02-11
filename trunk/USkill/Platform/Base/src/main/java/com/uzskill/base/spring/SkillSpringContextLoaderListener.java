@@ -2,9 +2,8 @@ package com.uzskill.base.spring;
 
 import javax.servlet.ServletContextEvent;
 
-import com.light.app.ApplicationContext;
 import com.light.spring.SpringContextLoaderListener;
-import com.uzskill.base.manager.BaseManager;
+import com.uzskill.base.schedule.SynchonizeScheduleService;
 
 /**
  * 该类继承自ContextLoaderListener，当一个Web应用上下文初始化成功后，系统将取得该上下文并将其设置到ApplicationContext，
@@ -20,7 +19,6 @@ public class SkillSpringContextLoaderListener extends SpringContextLoaderListene
 	
 	public void contextDestroyed(ServletContextEvent event) {
 		super.contextDestroyed(event);
-		BaseManager baseManager = (BaseManager) ApplicationContext.getInstance().getBean("BaseManager");
-		baseManager.destoryScheduledExecutor();
+		SynchonizeScheduleService.getInstance().shutdown();
 	}
 }
