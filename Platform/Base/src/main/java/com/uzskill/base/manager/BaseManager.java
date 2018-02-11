@@ -26,8 +26,6 @@ public class BaseManager extends LightManager {
 	
 	private static final Logger logger = LogManager.getLogger(BaseManager.class);
 	
-	protected static ScheduledExecutorService scheduledServive = Executors.newScheduledThreadPool(15);
-	
 	private RedisDao redis;
 
 	public RedisDao getRedis() {
@@ -111,6 +109,8 @@ public class BaseManager extends LightManager {
 	/**
 	 * Retrieve page list data.
 	 * If it is first page, system will returns the top 10 objects, else system returns the next 10 objects from the "start" score.
+	 * Cannot process these with Redis transaction, the second command hmget need the result of zRevRangeByScore. 
+	 * In Redis transaction, call responseSet.get() before trans.exec(), it causes "Exception: Please close pipeline or multi block before calling this method." 
 	 * 
 	 * @param hashKey
 	 * @param setKey
@@ -132,7 +132,7 @@ public class BaseManager extends LightManager {
 				int end = start - 50;
 				idSet = getRedis().zRevRangeByScore(setKey, start, end, 1, 10);
 			}
-			// call responseSet.get() before trans.exec(), it causes "Exception: Please close pipeline or multi block before calling this method."
+			
 			if(idSet != null && !idSet.isEmpty()) {
 				String[] idArray = (String[]) idSet.toArray();
 				rtnList = getRedis().hmGet(hashKey, clazz, idArray);
@@ -144,14 +144,4 @@ public class BaseManager extends LightManager {
 		
 		return rtnList;
     }
-	
-	/**
-	 * Shutdown the scheduled service executors.
-	 * 
-	 */
-	public void destoryScheduledExecutor() {
-		if(scheduledServive != null && !scheduledServive.isShutdown()) {
-			scheduledServive.shutdownNow();	
-		}
-	}
 }

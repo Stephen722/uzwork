@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.light.redis.CRUDEnum;
 import com.uzskill.base.manager.BaseManager;
-import com.uzskill.base.manager.BaseMonitor;
+import com.uzskill.base.schedule.SynchonizeScheduleService;
 import com.uzskill.base.skill.SkillManager;
 import com.uzskill.base.skill.SkillQuery;
 import com.uzskill.base.skill.bean.Skill;
@@ -23,12 +23,12 @@ public class SkillManagerImpl extends BaseManager implements SkillManager {
 //		BaseMonitor<SkillPraise> insertPraiseBM = new BaseMonitor<SkillPraise>(SkillQuery.REDIS_SKILL_PRAISE, CRUDEnum.INSERT, "", SkillPraise.class);
 //		BaseMonitor<SkillPraise> deletePraiseBM = new BaseMonitor<SkillPraise>(SkillQuery.REDIS_SKILL_PRAISE, CRUDEnum.DELETE, "", SkillPraise.class);
 //		
-//		scheduledServive.scheduleAtFixedRate(insertBM, 420, 900, TimeUnit.SECONDS);
-//		scheduledServive.scheduleAtFixedRate(deleteBM, 480, 900, TimeUnit.SECONDS);
-//		scheduledServive.scheduleAtFixedRate(insertCommentBM, 540, 180, TimeUnit.SECONDS);
-//		scheduledServive.scheduleAtFixedRate(deleteCommentBM, 600, 180, TimeUnit.SECONDS);
-//		scheduledServive.scheduleAtFixedRate(insertPraiseBM, 660, 180, TimeUnit.SECONDS);
-//		scheduledServive.scheduleAtFixedRate(deletePraiseBM, 720, 180, TimeUnit.SECONDS);
+//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(insertBM, 420, 900, TimeUnit.SECONDS);
+//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(deleteBM, 480, 900, TimeUnit.SECONDS);
+//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(insertCommentBM, 540, 180, TimeUnit.SECONDS);
+//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(deleteCommentBM, 600, 180, TimeUnit.SECONDS);
+//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(insertPraiseBM, 660, 180, TimeUnit.SECONDS);
+//		SynchonizeScheduleService.getInstance().scheduleAtFixedRate(deletePraiseBM, 720, 180, TimeUnit.SECONDS);
 //	}
 	
 	@Override

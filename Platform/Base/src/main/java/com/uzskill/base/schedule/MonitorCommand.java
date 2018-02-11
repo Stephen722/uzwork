@@ -1,4 +1,4 @@
-package com.uzskill.base.manager;
+package com.uzskill.base.schedule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,9 @@ import org.apache.logging.log4j.Logger;
 import com.light.redis.CRUDEnum;
 import com.uzskill.base.manager.BaseManager;
 
-public class BaseMonitor<T> implements Runnable {
+public class MonitorCommand<T> implements Runnable {
 	
-	private static final Logger logger = LogManager.getLogger(BaseMonitor.class);
+	private static final Logger logger = LogManager.getLogger(MonitorCommand.class);
 	
 	private CRUDEnum operation; // CRUD operation
 	private String statement;   // DB statement
@@ -19,7 +19,7 @@ public class BaseMonitor<T> implements Runnable {
 	private Class<T> objClass;  // The class refers to category
 	private BaseManager baseManager;
 	
-	public BaseMonitor(String category, CRUDEnum operation, String statement, Class<T> objClass, BaseManager baseManager) {
+	public MonitorCommand(String category, CRUDEnum operation, String statement, Class<T> objClass, BaseManager baseManager) {
 		this.operation = operation;
 		this.statement = statement;
 		this.category = category;
@@ -30,11 +30,10 @@ public class BaseMonitor<T> implements Runnable {
 	@Override
 	public void run() {
 		try {
-			logger.info("Starting to sync data: objClass={}, category={}, operation={}, statement={}, ", objClass.getName(), category, operation, statement);
 			redisSync(category, operation, statement, objClass);
 		}
 		catch(Exception e) {
-			logger.error("Failed to synchronize data for category={}, operation={}, statement={}, objClass={}. Error:{}", category, operation, statement, objClass.getName(), e);
+			logger.error("Failed to synchronize data beteen Redis and database: category={}, operation={}. Error:{}", category, operation, e);
 		}
 	}
 	
@@ -47,14 +46,15 @@ public class BaseMonitor<T> implements Runnable {
 	 * @param clazz the class refers to category
 	 */
 	public void redisSync(String category, CRUDEnum operation, String statement, Class<T> clazz) {
+		logger.debug("Starting to synchonize data between Redis and database: category={}, operation={}", category, operation);
+		
 		String listKey = category + ":" + operation.name().toLowerCase();
 		int length = baseManager.getRedis().lLen(listKey);
-		logger.debug("The size of {} is {}", listKey, length);
 		if(length <= 0) {
 			return;
 		}
 		
-		int fetchSize = 1000;
+		int fetchSize = 600;
 		List<T> unSavedList = null; // INSERT and UPDATE: the list of objects which have been persisted into database failed
 		List<String> unSavedIdList = null; // DELETE: the list of id which have been persisted into database faield
 		List<T> cachedList = null;  // the list of objects which cached in Redis
@@ -106,21 +106,20 @@ public class BaseMonitor<T> implements Runnable {
 		// remove the saved data  
 		// the set may be changed, MUST get the latest length again
 		int newLength = baseManager.getRedis().lLen(listKey);
-		logger.debug("The new size is {}", newLength);
-		logger.debug("trim the saved key");
 		baseManager.getRedis().lTrim(listKey, length + 1, newLength);
 		
-		// the unsaved data should be written back into Redis 
+		// the unsaved data should be written back into Redis. 
+		// DELETE list only contains ID, INSERT/UPDATE list contains object.
 		if(operation.equals(CRUDEnum.DELETE)) {
 			if(unSavedIdList != null && !unSavedIdList.isEmpty()) {
-				logger.debug("There are {} object(s) have not been saved", unSavedList.size());
 				baseManager.getRedis().lSet(listKey, unSavedIdList.toArray());
 			}
 		}
 		else if(unSavedList != null && !unSavedList.isEmpty()) {
-			logger.debug("There are {} object(s) have not been saved", unSavedList.size());
 			baseManager.getRedis().lSet(listKey, unSavedList);
 		}
+		
+		logger.debug("Synchonize data between Redis and database ended: category={}, operation={}", category, operation);
 	}
 	
 	/**
@@ -133,18 +132,24 @@ public class BaseMonitor<T> implements Runnable {
 	private List<T> redisBatchInsert(String statement, List<T> cachedList) {
 		List<T> unSavedList = new ArrayList<T>();
 		// batch insert
-		logger.debug("Starting to batch insert");
 		int rows = baseManager.insertBatch(statement, cachedList);
 		// if batch insert failed, then insert one by one to find which one cannot be persisted.
 		if(rows <= 0) {
+			logger.debug("Batch insert failed, try to insert one by one");
 			for(T t : cachedList) {
 				int insRows = baseManager.insert(statement, t);
 				if(insRows <= 0) {
 					unSavedList.add(t);
 				}
 			}
+			int unSavedSize = unSavedList.size();
+			if(unSavedSize > 0) {
+				logger.debug("{} object(s) still inserted failed", unSavedSize);
+			}
 		}
-		logger.debug("Batch insert end");
+		else {
+			logger.debug("Batch insert successfully, all data has been persisted into database");
+		}
 		return unSavedList;
 	}
 	
@@ -154,12 +159,20 @@ public class BaseMonitor<T> implements Runnable {
 		int rows = baseManager.updateBatch(statement, cachedList);
 		// if batch update failed, then update one by one to find which one cannot be persisted.
 		if(rows <= 0) {
+			logger.debug("Batch update failed, try to update one by one");
 			for(T t : cachedList) {
 				int row = baseManager.update(statement, t);
 				if(row <= 0) {
 					unSavedList.add(t);
 				}
 			}
+			int unSavedSize = unSavedList.size();
+			if(unSavedSize > 0) {
+				logger.debug("{} object(s) still updated failed", unSavedSize);
+			}
+		}
+		else {
+			logger.debug("Batch update successfully, all data has been persisted into database");
 		}
 		return unSavedList;
 	}
@@ -170,6 +183,7 @@ public class BaseMonitor<T> implements Runnable {
 		int rows = baseManager.deleteBatch(statement, cachedIdList);
 		// if batch delete failed, then delete one by one to find which one cannot be persisted.
 		if(rows <= 0) {
+			logger.debug("Batch delete failed, try to delete one by one");
 			for(String str : cachedIdList) {
 				int id = Integer.parseInt(str);
 				int row = baseManager.delete(statement, id);
@@ -177,6 +191,13 @@ public class BaseMonitor<T> implements Runnable {
 					unSavedList.add(str);
 				}
 			}
+			int unSavedSize = unSavedList.size();
+			if(unSavedSize > 0) {
+				logger.debug("{} object(s) still delete failed", unSavedSize);
+			}
+		}
+		else {
+			logger.debug("Batch delete successfully, all data has been deleted from database");
 		}
 		return unSavedList;
 	}
