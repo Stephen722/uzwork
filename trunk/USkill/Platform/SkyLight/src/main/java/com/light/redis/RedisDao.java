@@ -251,6 +251,71 @@ public class RedisDao {
         return (int) rtn;
     }
     
+
+    /**
+     * Set string list
+     * 
+     * @param key
+     * @param value
+     * @return integer reply
+     */
+    public int lRSet(String key, Object value){
+    	return lRSet(key, value, 0);
+    }
+    
+    /**
+     * Set string list with cache second
+     * Command: rpush
+     * 
+     * @param key
+     * @param value
+     * @param cacheSeconds
+     * @return integer reply
+     */
+    public int lRSet(String key, Object value, int cacheSeconds){
+        long rtn = 0;
+        Jedis jedis = getJedis();
+        try {
+        	String strValue = "";
+        	if(value instanceof String || value instanceof String[]) {
+        		strValue = (String) value;
+        		rtn = jedis.rpush(key, strValue);
+        	}
+        	else if(value instanceof List) {
+        		List values = (List) value;
+        		int size = values.size();
+        		String[] jsonStr = new String[values.size()];
+        		for(int i = 0; i < size; i++) {
+        			Object obj = values.get(i);
+        			String str = "";
+        			if(obj instanceof String) {
+        				str = (String) obj;
+        			}
+        			else {
+        				str = RedisUtils.jsonSerialize(obj);
+        			}
+        			jsonStr[i] = str;
+        		}
+        		rtn = jedis.rpush(key, jsonStr);
+        	}
+        	else {
+        		strValue = RedisUtils.jsonSerialize(value);
+        		rtn = jedis.rpush(key, strValue);
+        	}
+            
+            if (cacheSeconds != 0){
+                jedis.expire(key, cacheSeconds);
+            }
+        }
+        catch (Exception e){
+        	logger.error("Failed to push list "+key+" into redis.", e);
+        }
+        finally {
+            jedis.close();
+        }
+        return (int) rtn;
+    }
+    
     /**
      * Get the length of list
      * Command: llen

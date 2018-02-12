@@ -112,11 +112,11 @@ public class MonitorCommand<T> implements Runnable {
 		// DELETE list only contains ID, INSERT/UPDATE list contains object.
 		if(operation.equals(CRUDEnum.DELETE)) {
 			if(unSavedIdList != null && !unSavedIdList.isEmpty()) {
-				baseManager.getRedis().lSet(listKey, unSavedIdList.toArray());
+				baseManager.getRedis().lRSet(listKey, unSavedIdList.toArray());
 			}
 		}
 		else if(unSavedList != null && !unSavedList.isEmpty()) {
-			baseManager.getRedis().lSet(listKey, unSavedList);
+			baseManager.getRedis().lRSet(listKey, unSavedList);
 		}
 		
 		logger.debug("Synchronization ending: {}", statement);
@@ -148,7 +148,7 @@ public class MonitorCommand<T> implements Runnable {
 			}
 		}
 		else {
-			logger.debug("{}, batch insert successfully", statement);
+			logger.debug("{}, batch insert {} object(s)", statement, cachedList.size());
 		}
 		return unSavedList;
 	}
