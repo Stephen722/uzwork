@@ -38,92 +38,92 @@ public class TopicAction extends MobileBaseAction {
 	 */
 	public void execute() {
 		try{
-			new Thread(new Runnable() {
-	            public void run() {
-	            	int i = 0;
-	                while (true) {
-	                    try {
-	                    	i++;
-	                    	Topic topic = new Topic();
-	                    	topic.setImageB(0);
-	                    	topic.setUserId(i);
-	                    	topic.setContent("This is a test topic for sequence " + i);
-	                    	topic.setCreatedTime(DateUtils.getDate(System.currentTimeMillis()));
-	                    	getTopicManager().insertTopic(topic);
-	                    	logger.info("Insert a new topic: {}", topic.getTopicId());
-	                    	Thread.sleep(200);
-	                    } catch (Exception e) {
-	                    	logger.error("Error in insert thread... {}", e);
-	                    }
-	                }
-	            }
-	        }).start();
-			
-			new Thread(new Runnable() {
-	            public void run() {
-	            	int i = 0;
-	                while (true) {
-	                    try {
-	                    	i++;
-	                    	TopicComment topicc = new TopicComment();
-	                    	topicc.setTopicId(i);
-	                    	topicc.setContent("This is the content for comment " + i);
-	                    	topicc.setTargetUserId(0);
-	                    	topicc.setPostUserId(i);
-	                    	topicc.setCreatedTime(DateUtils.getDate(System.currentTimeMillis()));
-	                    	getTopicManager().insertComment(topicc);
-	                    	logger.info("Insert a new topic comment: {}", topicc.getId());
-	                    	
-	                    	Thread.sleep(400);
-	                    } catch (Exception e) {
-	                    	logger.error("Error in insert thread... {}", e);
-	                    }
-	                }
-	            }
-	        }).start();
-			
-			new Thread(new Runnable() {
-	            public void run() {
-	            	int i = 0;
-	                while (true) {
-	                    try {
-	                    	i++;
-	                    	TopicPraise tp = new TopicPraise();
-	                    	tp.setTopicId(i);
-	                    	tp.setTargetUserId(0);
-	                    	tp.setPostUserId(i);
-	                    	tp.setCreatedTime(DateUtils.getDate(System.currentTimeMillis()));
-	                    	getTopicManager().insertPraise(tp);
-	                    	logger.info("Insert a new topic praise: {}", tp.getId());
-	                    	
-	                    	Thread.sleep(500);
-	                    } catch (Exception e) {
-	                    	logger.error("Error in insert thread... {}", e);
-	                    }
-	                }
-	            }
-	        }).start();
-			
-			new Thread(new Runnable() {
-	            public void run() {
-	            	int i = 0;
-	                while (true) {
-	                    try {
-	                    	i++;
-	                    	Skill skill = new Skill();
-	                    	skill.setImageB(0);
-	                    	skill.setUserId(i);
-	                    	skill.setContent("This is a test skill for sequence " + i);
-	                    	skill.setCreatedTime(DateUtils.getDate(System.currentTimeMillis()));
-	                    	getSkillManager().insertSkill(skill);
-	                    	logger.info("Insert a new skill: {}", skill.getSkillId());
-	                    	Thread.sleep(200);
-	                    } catch (Exception e) {
-	                    	logger.error("Error in insert thread... {}", e);
-	                    }
-	                }
-	            }
-	        }).start();
+//			new Thread(new Runnable() {
+//	            public void run() {
+//	            	int i = 0;
+//	                while (true) {
+//	                    try {
+//	                    	i++;
+//	                    	Topic topic = new Topic();
+//	                    	topic.setImageB(0);
+//	                    	topic.setUserId(i);
+//	                    	topic.setContent("This is a test topic for sequence " + i);
+//	                    	topic.setCreatedTime(DateUtils.getDate(System.currentTimeMillis()));
+//	                    	getTopicManager().insertTopic(topic);
+//	                    	logger.info("Insert a new topic: {}", topic.getTopicId());
+//	                    	Thread.sleep(200);
+//	                    } catch (Exception e) {
+//	                    	logger.error("Error in insert thread... {}", e);
+//	                    }
+//	                }
+//	            }
+//	        }).start();
+//			
+//			new Thread(new Runnable() {
+//	            public void run() {
+//	            	int i = 0;
+//	                while (true) {
+//	                    try {
+//	                    	i++;
+//	                    	TopicComment topicc = new TopicComment();
+//	                    	topicc.setTopicId(i);
+//	                    	topicc.setContent("This is the content for comment " + i);
+//	                    	topicc.setTargetUserId(0);
+//	                    	topicc.setPostUserId(i);
+//	                    	topicc.setCreatedTime(DateUtils.getDate(System.currentTimeMillis()));
+//	                    	getTopicManager().insertComment(topicc);
+//	                    	logger.info("Insert a new topic comment: {}", topicc.getId());
+//	                    	
+//	                    	Thread.sleep(400);
+//	                    } catch (Exception e) {
+//	                    	logger.error("Error in insert thread... {}", e);
+//	                    }
+//	                }
+//	            }
+//	        }).start();
+//			
+//			new Thread(new Runnable() {
+//	            public void run() {
+//	            	int i = 0;
+//	                while (true) {
+//	                    try {
+//	                    	i++;
+//	                    	TopicPraise tp = new TopicPraise();
+//	                    	tp.setTopicId(i);
+//	                    	tp.setTargetUserId(0);
+//	                    	tp.setPostUserId(i);
+//	                    	tp.setCreatedTime(DateUtils.getDate(System.currentTimeMillis()));
+//	                    	getTopicManager().insertPraise(tp);
+//	                    	logger.info("Insert a new topic praise: {}", tp.getId());
+//	                    	
+//	                    	Thread.sleep(500);
+//	                    } catch (Exception e) {
+//	                    	logger.error("Error in insert thread... {}", e);
+//	                    }
+//	                }
+//	            }
+//	        }).start();
+//			
+//			new Thread(new Runnable() {
+//	            public void run() {
+//	            	int i = 0;
+//	                while (true) {
+//	                    try {
+//	                    	i++;
+//	                    	Skill skill = new Skill();
+//	                    	skill.setImageB(0);
+//	                    	skill.setUserId(i);
+//	                    	skill.setContent("This is a test skill for sequence " + i);
+//	                    	skill.setCreatedTime(DateUtils.getDate(System.currentTimeMillis()));
+//	                    	getSkillManager().insertSkill(skill);
+//	                    	logger.info("Insert a new skill: {}", skill.getSkillId());
+//	                    	Thread.sleep(200);
+//	                    } catch (Exception e) {
+//	                    	logger.error("Error in insert thread... {}", e);
+//	                    }
+//	                }
+//	            }
+//	        }).start();
 			
 			new Thread(new Runnable() {
 	            public void run() {
