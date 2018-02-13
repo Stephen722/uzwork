@@ -76,8 +76,8 @@ public class UserManagerTest extends BaseTestCase {
 //		long start = System.currentTimeMillis();
 		for(int i = 1; i <= 10000; i++) {
 			User user = new User();
-			long phone = 15000123978l + i;
-			user.setUserId(1080078 + i);
+			long phone = 15000000000l + i;
+			user.setUserId(130000+i);
 			user.setPhone(String.valueOf(phone));
 			user.setNickname(String.valueOf(phone));
 			user.setCreatedIp("127.0.0.2");
@@ -87,22 +87,16 @@ public class UserManagerTest extends BaseTestCase {
 			user.setCreatedTime(createdTime);
 			user.setLoginTime(createdTime);
 			list.add(user);
-			
 		}
-		long start = System.currentTimeMillis();
-		for(User u : list) {
-			userManager.insertUser(u);
-		}
-		
-		System.out.println("Insert Users:" + (System.currentTimeMillis() - start));
 		
 //		long startDB1 = System.currentTimeMillis();
 //		for(User u1 : list) {
 //			userManager.insertUser(u1);
 //		}
 //		System.out.println("Insert Users:" + (System.currentTimeMillis() - startDB1));
-//		long startDB2 = System.currentTimeMillis();
-//		System.out.println("Insert Users in Batch:" + (System.currentTimeMillis() - startDB2));
+		long startDB2 = System.currentTimeMillis();
+		userManager.insertUserList(list);
+		System.out.println("Insert Users in Batch:" + (System.currentTimeMillis() - startDB2));
 		
 	}
 //

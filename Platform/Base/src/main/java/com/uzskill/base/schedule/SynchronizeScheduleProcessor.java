@@ -21,7 +21,7 @@ public class SynchronizeScheduleProcessor {
 	
 	public void scheduleInit() {
 		startTopicTask();
-		startSkillTask();
+//		startSkillTask();
 //		startUserTask();
 	}
 	
@@ -31,11 +31,11 @@ public class SynchronizeScheduleProcessor {
 	 */
 	private void startTopicTask() {
 		MonitorCommand<Topic> insertBM = new MonitorCommand<Topic>(TopicQuery.REDIS_TOPIC, CRUDEnum.INSERT, TopicQuery.INSERT_TOPIC, Topic.class, baseManager);
-		MonitorCommand<Topic> deleteBM = new MonitorCommand<Topic>(TopicQuery.REDIS_TOPIC, CRUDEnum.DELETE, TopicQuery.DELETE_TOPIC, Topic.class, baseManager);
-		MonitorCommand<TopicComment> insertCommentBM = new MonitorCommand<TopicComment>(TopicQuery.REDIS_TOPIC_COMMENT, CRUDEnum.INSERT, TopicQuery.INSERT_TOPIC_COMMENT, TopicComment.class, baseManager);
-		MonitorCommand<TopicComment> deleteCommentBM = new MonitorCommand<TopicComment>(TopicQuery.REDIS_TOPIC_COMMENT, CRUDEnum.DELETE, TopicQuery.DELETE_TOPIC_COMMENT, TopicComment.class, baseManager);
-		MonitorCommand<TopicPraise> insertPraiseBM = new MonitorCommand<TopicPraise>(TopicQuery.REDIS_TOPIC_PRAISE, CRUDEnum.INSERT, TopicQuery.INSERT_TOPIC_PRAISE, TopicPraise.class, baseManager);
-		MonitorCommand<TopicPraise> deletePraiseBM = new MonitorCommand<TopicPraise>(TopicQuery.REDIS_TOPIC_PRAISE, CRUDEnum.DELETE, TopicQuery.DELETE_TOPIC_PRAISE, TopicPraise.class, baseManager);
+//		MonitorCommand<Topic> deleteBM = new MonitorCommand<Topic>(TopicQuery.REDIS_TOPIC, CRUDEnum.DELETE, TopicQuery.DELETE_TOPIC, Topic.class, baseManager);
+//		MonitorCommand<TopicComment> insertCommentBM = new MonitorCommand<TopicComment>(TopicQuery.REDIS_TOPIC_COMMENT, CRUDEnum.INSERT, TopicQuery.INSERT_TOPIC_COMMENT, TopicComment.class, baseManager);
+//		MonitorCommand<TopicComment> deleteCommentBM = new MonitorCommand<TopicComment>(TopicQuery.REDIS_TOPIC_COMMENT, CRUDEnum.DELETE, TopicQuery.DELETE_TOPIC_COMMENT, TopicComment.class, baseManager);
+//		MonitorCommand<TopicPraise> insertPraiseBM = new MonitorCommand<TopicPraise>(TopicQuery.REDIS_TOPIC_PRAISE, CRUDEnum.INSERT, TopicQuery.INSERT_TOPIC_PRAISE, TopicPraise.class, baseManager);
+//		MonitorCommand<TopicPraise> deletePraiseBM = new MonitorCommand<TopicPraise>(TopicQuery.REDIS_TOPIC_PRAISE, CRUDEnum.DELETE, TopicQuery.DELETE_TOPIC_PRAISE, TopicPraise.class, baseManager);
 		
 //		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(insertCommentBM, 120, 1800, TimeUnit.SECONDS);
 //		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(deleteCommentBM, 240, 1800, TimeUnit.SECONDS);
@@ -45,12 +45,12 @@ public class SynchronizeScheduleProcessor {
 //		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(deleteBM, 720, 1800, TimeUnit.SECONDS);
 		
 		// Testing...
-		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(insertCommentBM, 12, 180, TimeUnit.SECONDS);
-		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(deleteCommentBM, 24, 180, TimeUnit.SECONDS);
-		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(insertPraiseBM, 36, 180, TimeUnit.SECONDS);
-		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(deletePraiseBM, 48, 180, TimeUnit.SECONDS);
-		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(insertBM, 60, 180, TimeUnit.SECONDS);
-		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(deleteBM, 72, 180, TimeUnit.SECONDS);
+//		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(insertCommentBM, 12, 180, TimeUnit.SECONDS);
+//		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(deleteCommentBM, 24, 180, TimeUnit.SECONDS);
+//		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(insertPraiseBM, 36, 180, TimeUnit.SECONDS);
+//		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(deletePraiseBM, 48, 180, TimeUnit.SECONDS);
+		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(insertBM, 2, 90, TimeUnit.SECONDS);
+//		SynchronizeScheduleService.getInstance().scheduleAtFixedRate(deleteBM, 72, 180, TimeUnit.SECONDS);
 	}
 	
 	/**
