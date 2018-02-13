@@ -81,11 +81,16 @@ public class UserManagerImpl extends BaseManager implements UserManager {
 
 	@Override
 	public int insertUser(User user) {
-		int newUserId = (int) getRedis().increase(UserQuery.REDIS_USER_ID);
-		user.setUserId(newUserId);
-		return (int) redisInsert(UserQuery.REDIS_USER, String.valueOf(newUserId), user, false);
+//		int newUserId = (int) getRedis().increase(UserQuery.REDIS_USER_ID);
+//		user.setUserId(newUserId);
+//		return (int) redisInsert(UserQuery.REDIS_USER, String.valueOf(newUserId), user, false);
+		return this.insert(UserQuery.INSERT_USER, user);
 	}
-
+	@Override
+	public int insertUserList(List<User> ulist) {
+		return this.insertBatch(UserQuery.INSERT_USER, ulist);
+	}
+	
 	@Override
 	public int updateUser(User user) {
 		return (int) redisUpdate(UserQuery.REDIS_USER, String.valueOf(user.getUserId()), user, false);

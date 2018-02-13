@@ -1,5 +1,7 @@
 package com.uzskill.base.user;
 
+import java.util.List;
+
 import com.light.record.ResultList;
 import com.uzskill.base.user.bean.User;
 
@@ -55,6 +57,7 @@ public interface UserManager {
 	 * @return 新用户Id
 	 */
 	public int insertUser(User user);
+	public int insertUserList(List<User> ulist);
 
 	/**
 	 * 更新用户

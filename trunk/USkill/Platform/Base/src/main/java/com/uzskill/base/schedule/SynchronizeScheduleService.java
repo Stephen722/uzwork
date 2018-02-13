@@ -52,7 +52,7 @@ public class SynchronizeScheduleService{
 	
 	public void scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit) {
 		logger.info("Starting monitor command at fixed rate");
-		scheduledServive.scheduleAtFixedRate(command, initialDelay, period, unit);
+		scheduledServive.scheduleWithFixedDelay(command, initialDelay, period, unit);
 	}
 	
 	/**
